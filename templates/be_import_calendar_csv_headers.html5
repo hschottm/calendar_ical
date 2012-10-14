@@ -1,0 +1,70 @@
+
+<div id="tl_buttons">
+<a href="<?php echo $this->hrefBack; ?>" class="header_back" title="<?php echo $this->goBack; ?>" accesskey="b" onclick="Backend.getScrollOffset();"><?php echo $this->goBack; ?></a>
+</div>
+
+<h2 class="sub_headline"><?php echo $this->headline; ?></h2>
+
+<form action="<?php echo $this->request; ?>" id="tl_csv_headers" class="tl_form" method="post">
+<div class="tl_formbody_edit">
+<input type="hidden" name="FORM_SUBMIT" value="tl_csv_headers" />
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+
+<div class="tl_tbox">
+  <h3><?php echo $this->lngFields; ?></h3>
+	<table>
+<?php foreach ($this->fields as $fieldArray): ?>
+	<tr>
+	<td><div><?php echo $fieldArray[0]->generateWithError() ?></div></td>
+	<td><div><?php echo $fieldArray[1]->generateWithError() ?></div></td>
+	</tr>
+<?php endforeach; ?>
+	</table>
+</div>
+<?php if (is_object($this->dateFormat)): ?>
+<div class="tl_tbox">
+  <h3><?php echo $this->dateFormat->generateLabel(); ?></h3>
+  <?php echo $this->dateFormat->generateWithError(); if ($this->dateFormat->help): ?> 
+  <p class="tl_help"><?php echo $this->dateFormat->help; ?></p><?php endif; ?> 
+</div>
+<div class="tl_tbox">
+  <h3><?php echo $this->timeFormat->generateLabel(); ?></h3>
+  <?php echo $this->timeFormat->generateWithError(); if ($this->timeFormat->help): ?> 
+  <p class="tl_help"><?php echo $this->timeFormat->help; ?></p><?php endif; ?> 
+</div>
+<?php endif; ?>
+<div class="tl_tbox">
+  <h3><?php echo $this->encoding->generateLabel(); ?></h3>
+  <?php echo $this->encoding->generateWithError(); if ($this->encoding->help): ?> 
+  <p class="tl_help"><?php echo $this->encoding->help; ?></p><?php endif; ?> 
+</div>
+<div class="tl_tbox">
+  <h3><?php echo $this->lngPreview; ?></h3>
+<?php if (is_array($this->header) && count($this->header) > 0): ?>
+	<table>
+		<thead>
+			<tr>
+				<?php foreach ($this->header as $t): ?><td><?php echo $t; ?><?php endforeach; ?>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($this->preview as $line): ?>
+			<tr>
+				<?php foreach ($line as $t): ?><td><?php echo $t; ?><?php endforeach; ?>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+<?php endif; ?>
+</div>
+</div>
+
+<div class="tl_formbody_submit">
+
+<div class="tl_submit_container">
+<input type="submit" name="check" id="check" class="tl_submit" alt="<?php echo $this->check; ?>" accesskey="s" value="<?php echo $this->check; ?>" />
+<input type="submit" name="import" id="save" class="tl_submit" alt="<?php echo $this->submit; ?>" accesskey="s" value="<?php echo $this->submit; ?>" />
+</div>
+
+</div>
+</form>

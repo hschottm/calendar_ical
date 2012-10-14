@@ -1,0 +1,50 @@
+
+<div id="tl_buttons">
+<a href="<?php echo $this->hrefBack; ?>" class="header_back" title="<?php echo $this->goBack; ?>" accesskey="b" onclick="Backend.getScrollOffset();"><?php echo $this->goBack; ?></a>
+</div>
+
+<h2 class="sub_headline"><?php echo $this->headline; ?></h2>
+
+<form action="<?php echo $this->request; ?>" id="tl_import_calendar" class="tl_form" method="post">
+<div class="tl_formbody_edit">
+<input type="hidden" name="FORM_SUBMIT" value="tl_import_calendar" />
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+
+<div class="tl_tbox">
+  <h3><?php echo $this->icssource->generateLabel(); ?></h3>
+  <?php echo $this->icssource->generateWithError(); if ($this->icssource->help): ?> 
+  <p class="tl_help"><?php echo $this->icssource->help; ?></p><?php endif; ?> 
+
+  <h3><?php echo $this->startDate->generateLabel(); ?></h3>
+  <?php echo $this->startDate->generateWithError(); if ($this->startDate->help): ?> 
+  <p class="tl_help"><?php echo $this->startDate->help; ?></p><?php endif; ?> 
+  <script type="text/javascript"><!--//--><![CDATA[//><!--
+  window.addEvent('domready', function() { <?php echo $this->startDate->datepicker; ?> });
+  //--><!]]></script>
+
+  <h3><?php echo $this->endDate->generateLabel(); ?></h3>
+  <?php echo $this->endDate->generateWithError(); if ($this->endDate->help): ?> 
+  <p class="tl_help"><?php echo $this->endDate->help; ?></p><?php endif; ?> 
+  <script type="text/javascript"><!--//--><![CDATA[//><!--
+  window.addEvent('domready', function() { <?php echo $this->endDate->datepicker; ?> });
+  //--><!]]></script>
+
+  <h3><?php echo $this->deleteCalendar->generateLabel(); ?></h3>
+  <?php echo $this->deleteCalendar->generateWithError(); if ($this->deleteCalendar->help): ?> 
+  <p class="tl_help"><?php echo $this->deleteCalendar->help; ?></p><?php endif; ?> 
+
+  <h3><?php echo $this->timeshift->generateLabel(); ?></h3>
+  <?php echo $this->timeshift->generateWithError(); if ($this->timeshift->help): ?> 
+  <p class="tl_help"><?php echo $this->timeshift->help; ?></p><?php endif; ?> 
+</div>
+
+</div>
+
+<div class="tl_formbody_submit">
+
+<div class="tl_submit_container">
+<input type="submit" name="import" id="save" class="tl_submit" alt="<?php echo $this->submit; ?>" accesskey="s" value="<?php echo $this->submit; ?>" />
+</div>
+
+</div>
+</form>

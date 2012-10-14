@@ -1,0 +1,43 @@
+
+<div id="tl_buttons">
+<a href="<?php echo $this->hrefBack; ?>" class="header_back" title="<?php echo $this->goBack; ?>" accesskey="b" onclick="Backend.getScrollOffset();"><?php echo $this->goBack; ?></a>
+</div>
+
+<h2 class="sub_headline"><?php echo $this->headline; ?></h2>
+
+<form action="<?php echo $this->request; ?>" id="tl_import_calendar_confirmation" class="tl_form" method="post">
+<div class="tl_formbody_edit">
+<input type="hidden" name="icssource" value="<?php echo $this->icssource; ?>" />
+<input type="hidden" name="startDate" value="<?php echo $this->startDate; ?>" />
+<input type="hidden" name="deleteCalendar" value="<?php echo $this->deleteCalendar; ?>" />
+<input type="hidden" name="endDate" value="<?php echo $this->endDate; ?>" />
+<input type="hidden" name="FORM_SUBMIT" value="tl_import_calendar_confirmation" />
+<input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<div class="tl_tbox">
+  <p><?php echo $this->confirmationText; ?></p>
+</div>
+<?php if ($this->correctTimezone): ?>
+<div class="tl_tbox">
+  <h3><?php echo $this->correctTimezone->generateLabel(); ?></h3>
+  <?php echo $this->correctTimezone->generateWithError(); if ($this->correctTimezone->help): ?> 
+  <p class="tl_help"><?php echo $this->correctTimezone->help; ?></p><?php endif; ?> 
+</div>
+<?php endif; ?>
+<?php if ($this->timezone): ?>
+<div class="tl_box">
+  <h3><?php echo $this->timezone->generateLabel(); ?></h3>
+  <?php echo $this->timezone->generateWithError(); if ($this->timezone->help): ?> 
+  <p class="tl_help"><?php echo $this->timezone->help; ?></p><?php endif; ?> 
+</div>
+<?php endif; ?>
+
+</div>
+
+<div class="tl_formbody_submit">
+
+<div class="tl_submit_container">
+<input type="submit" name="import" id="save" class="tl_submit" alt="<?php echo $this->submit; ?>" accesskey="s" value="<?php echo $this->submit; ?>" />
+</div>
+
+</div>
+</form>

@@ -1,0 +1,16 @@
+/* Icons header */
+.header_import
+{
+	padding:2px 0 3px 20px;
+	background-image:url("import.png");
+	background-position:left center;
+	background-repeat:no-repeat;
+}
+
+.header_export
+{
+	padding:2px 0 3px 20px;
+	background-image:url("export.png");
+	background-position:left center;
+	background-repeat:no-repeat;
+}
