@@ -92,7 +92,7 @@ class CalendarExport extends Backend
 	/**
 	 * Remove old ics files from the root directory
 	 */
-	protected function removeOldSubscriptions()
+	public function removeOldSubscriptions()
 	{
 		$arrFeeds = array();
 		$objFeeds = $this->Database->prepare("SELECT id, ical_alias FROM tl_calendar WHERE make_ical=?")->execute(1);
@@ -118,7 +118,7 @@ class CalendarExport extends Backend
 				continue;
 			}
 
-			$objFile = new File($file);
+			$objFile = new \File($file);
 			if ($objFile->extension == 'ics' && !in_array($objFile->filename, $arrFeeds) && !preg_match('/^sitemap/i', $objFile->filename))
 			{
 				$this->log('file ' . $objFile->filename, '', TL_CRON);
