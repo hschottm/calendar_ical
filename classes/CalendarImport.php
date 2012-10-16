@@ -172,11 +172,8 @@ class CalendarImport extends Backend
 		}
 
 		$data = TL_ROOT . '/' . $this->Session->get('csv_filename');
-		$parser = new CSVParser($data);
-		if (strlen($encoding) > 0) $parser->encoding = $encoding;
-		$parser->determineSeparator();
+		$parser = new CSVParser($data, (strlen($encoding) > 0) ? $encoding : 'utf8');
 		$header = $parser->extractHeader();
-
 		for ($i = 0; $i < count($header); $i++)
 		{
 			$objCSV = $this->getFieldSelector($i, 'csvfield', $header, (is_array($csvvalues)) ? $csvvalues[$i] : $header[$i]);
@@ -192,6 +189,19 @@ class CalendarImport extends Backend
 			$this->Template->lngPreview = $GLOBALS['TL_LANG']['tl_calendar_events']['preview'];
 			$this->Template->check = $GLOBALS['TL_LANG']['tl_calendar_events']['check'];
 			$this->Template->header = $header;
+			if (count($preview))
+			{
+				foreach ($preview as $idx => $line)
+				{
+					if (is_array($line))
+					{
+						foreach ($line as $key => $value)
+						{
+							$preview[$idx][$key] = specialchars($value);
+						}
+					}
+				}
+			}
 			$this->Template->preview = $preview;
 			$this->Template->encoding = $this->getEncodingWidget($encoding);
 			if (function_exists('strptime'))
@@ -290,10 +300,10 @@ class CalendarImport extends Backend
 										$arrFields['endTime'] = $arrFields['endDate'];
 										break;
 									case 'details':
-										array_push($eventcontent, $data[$foundindex]);
+										array_push($eventcontent, specialchars($data[$foundindex]));
 										break;
 									default:
-										if (strlen($data[$foundindex])) $arrFields[$value] = $data[$foundindex];
+										if (strlen($data[$foundindex])) $arrFields[$value] = specialchars($data[$foundindex]);
 										break;
 								}
 							}
