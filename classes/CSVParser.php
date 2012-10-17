@@ -65,7 +65,7 @@ class CSVParser
 			array_push($res, $this->reader->current());
 			$lines--;
 		} while ($this->reader->valid() && $lines > 0);
-		if ($this->reader->valid())
+		if (count($res))
 		{
 			return $res;
 		}
