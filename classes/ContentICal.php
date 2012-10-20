@@ -89,7 +89,6 @@ class ContentICal extends ContentElement
 			return array();
 		}
 
-		require_once(TL_ROOT . '/plugins/iCalcreator/iCalcreator.class.php' ); 
 		$this->ical = new \vcalendar();
 		$this->ical->setConfig('ical_' . $this->id, 'aurealis.de' );
 		$this->ical->setProperty( 'method', 'PUBLISH' );

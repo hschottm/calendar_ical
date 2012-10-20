@@ -137,7 +137,6 @@ class CalendarExport extends Backend
 			return array();
 		}
 
-		require_once(TL_ROOT . '/plugins/iCalcreator/iCalcreator.class.php' ); 
 		$ical = new \vcalendar();
 		$ical->setConfig('ical_' . $this->id, 'aurealis.de' );
 		$ical->setProperty( 'method', 'PUBLISH' );

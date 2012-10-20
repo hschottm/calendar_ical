@@ -71,7 +71,6 @@ class CalendarImport extends Backend
 	
 	public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone)
 	{
-		require_once(TL_ROOT . '/plugins/iCalcreator/iCalcreator.class.php' ); 
 		$this->cal = new \vcalendar();
 		$this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
 		$this->cal->setProperty('method', 'PUBLISH');
