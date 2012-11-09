@@ -594,7 +594,6 @@ class CalendarImport extends Backend
 	protected function importFromICSFile($filename, DataContainer $dc, $startDate, $endDate, $correctTimezone = null, $manualTZ = null, $deleteCalendar = false, $timeshift = 0)
 	{
 		$pid = $dc->id;
-		require_once(TL_ROOT . '/plugins/iCalcreator/iCalcreator.class.php' ); 
 		$this->cal = new \vcalendar();
 		$this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
 		$this->cal->setProperty('method', 'PUBLISH');
