@@ -17,7 +17,7 @@ namespace Contao;
  * @author     Helmut Schottmüller <typolight@aurealis.de>
  * @package    Controller
  */
-class CalendarExport extends Backend
+class CalendarExport extends \Backend
 {
 	/**
 	 * Update a particular RSS feed

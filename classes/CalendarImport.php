@@ -17,7 +17,7 @@ namespace Contao;
  * @author     Helmut Schottmüller <typolight@aurealis.de>
  * @package    Controller
  */
-class CalendarImport extends Backend
+class CalendarImport extends \Backend
 {
 	protected $blnSave = true;
 	protected $cal;
