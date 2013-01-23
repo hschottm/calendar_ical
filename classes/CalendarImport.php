@@ -93,7 +93,7 @@ class CalendarImport extends \Backend
 	
 	protected function downloadURLToTempFile($url)
 	{
-		if ($this->isCurlInstalled())
+		if (false)//$this->isCurlInstalled())
 		{
 			$ch = curl_init($url);
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -103,10 +103,11 @@ class CalendarImport extends \Backend
 		}
 		else
 		{
+			$url = html_entity_decode($url);
 			$content = file_get_contents($url);
-		}		
+		}
 		$filename = md5(time());
-		$objFile = new File('system/tmp/' . $filename);
+		$objFile = new \File('system/tmp/' . $filename);
 		$objFile->write($content);
 		$objFile->close();
 		return 'system/tmp/' . $filename;
@@ -183,7 +184,7 @@ class CalendarImport extends \Backend
 		{
 			$count = 5;
 			$preview = $parser->getDataArray(5);
-			$this->Template = new BackendTemplate('be_import_calendar_csv_headers');
+			$this->Template = new \BackendTemplate('be_import_calendar_csv_headers');
 			$this->Template->lngFields = $GLOBALS['TL_LANG']['tl_calendar_events']['fields'];
 			$this->Template->lngPreview = $GLOBALS['TL_LANG']['tl_calendar_events']['preview'];
 			$this->Template->check = $GLOBALS['TL_LANG']['tl_calendar_events']['check'];
@@ -400,7 +401,7 @@ class CalendarImport extends \Backend
 								$step = 128;
 								foreach ($eventcontent as $content)
 								{
-									$cm = new ContentModel();
+									$cm = new \ContentModel();
 									$cm->pid = $insertID;
 									$cm->ptable = 'tl_calendar_events';
 									$cm->sorting = $step;
