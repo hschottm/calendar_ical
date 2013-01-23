@@ -93,7 +93,8 @@ class CalendarImport extends \Backend
 	
 	protected function downloadURLToTempFile($url)
 	{
-		if (false)//$this->isCurlInstalled())
+		$url = html_entity_decode($url);
+		if ($this->isCurlInstalled())
 		{
 			$ch = curl_init($url);
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -103,7 +104,6 @@ class CalendarImport extends \Backend
 		}
 		else
 		{
-			$url = html_entity_decode($url);
 			$content = file_get_contents($url);
 		}
 		$filename = md5(time());
