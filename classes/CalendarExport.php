@@ -177,7 +177,7 @@ class CalendarExport extends \Backend
 					}
 				}
 				$vevent->setProperty( 'summary', html_entity_decode((strlen($title_prefix) ? $title_prefix . " " : "") . $objEvents->title, ENT_QUOTES, 'UTF-8'));
-				$vevent->setProperty( 'description', html_entity_decode(strip_tags(preg_replace('/<br \\/>/', "\n", $objEvents->details)), ENT_QUOTES, 'UTF-8'));
+				$vevent->setProperty( 'description', html_entity_decode(strip_tags(preg_replace('/<br \\/>/', "\n", $this->replaceInsertTags($objEvents->details))), ENT_QUOTES, 'UTF-8'));
 				if ($objEvents->cep_location)
 				{
 					$vevent->setProperty( 'location', trim(html_entity_decode($objEvents->cep_location, ENT_QUOTES, 'UTF-8')));
