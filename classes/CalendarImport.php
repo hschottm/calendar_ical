@@ -644,7 +644,17 @@ class CalendarImport extends \Backend
 		$defaultFields = array();
 		foreach ($fields as $fieldarr)
 		{
-			if (strcmp($fieldarr['name'], 'id') != 0 && strcmp($fieldarr['name'], 'PRIMARY') != 0) $defaultFields[$fieldarr['name']] = '';
+			if (strcmp($fieldarr['name'], 'id') != 0 && strcmp($fieldarr['name'], 'PRIMARY') != 0) 
+			{
+				if (strlen($fieldarr['default']))
+				{
+					$defaultFields[$fieldarr['name']] = $fieldarr['default'];
+				}
+				else
+				{
+					$defaultFields[$fieldarr['name']] = '';
+				}
+			}
 		}
 
 		// Get all default values for new entries
@@ -808,7 +818,7 @@ class CalendarImport extends \Backend
 								}
 								$repeatEach['value'] = (array_key_exists('INTERVAL', $rrule)) ? $rrule['INTERVAL'] : 1;
 								$arrFields['repeatEach'] = serialize($repeatEach);
-								$arrFields['repeatEnd'] = $arrFields['endTime'];
+								$arrFields['repeatEnd'] = (strlen($arrFields['endTime']) ? $arrFields['endTime'] : 0);
 							}
 							$foundevents[$uid]++;
 							if ($foundevents[$uid] <= 1)
