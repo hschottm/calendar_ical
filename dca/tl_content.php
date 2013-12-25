@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
  * Table tl_content
@@ -54,8 +54,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ical_end'] = array
  * Class tl_content_ical
  *
  * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  Helmut Schottmüller 2009
- * @author     Helmut Schottmüller <typolight@aurealis.de>
+ * @copyright  Helmut Schottmüller 2009-2013
+ * @author     Helmut Schottmüller <https://github.com/hschottm>
  * @package    Controller
  */
 class tl_content_ical extends Backend
@@ -94,4 +94,3 @@ class tl_content_ical extends Backend
 	}
 }
 
-?>

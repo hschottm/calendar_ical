@@ -6,8 +6,8 @@ namespace Contao;
  * Class CSVParser
  *
  * CSV parser class for "ical".
- * @copyright  Helmut Schottmüller 2012
- * @author     Helmut Schottmüller <contao@aurealis.de>
+ * @copyright  Helmut Schottmüller 2012-2013
+ * @author     Helmut Schottmüller <https://github.com/hschottm>
  * @package    Controller
  */
 class CSVParser
@@ -214,4 +214,3 @@ class CsvReader implements \Iterator {
 	}
 }
 
-?>

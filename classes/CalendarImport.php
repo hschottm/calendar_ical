@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @copyright  Helmut Schottmüller 2009
- * @author     Helmut Schottmüller <typolight@aurealis.de>
+ * @copyright  Helmut Schottmüller 2009-2013
+ * @author     Helmut Schottmüller <https://github.com/hschottm>
  * @package    CalendarImport
  * @license    LGPL
  */
@@ -13,8 +13,8 @@ namespace Contao;
  * Class CalendarImport
  *
  * Provide methods to handle import and export of member data.
- * @copyright  Helmut Schottmüller 2009
- * @author     Helmut Schottmüller <typolight@aurealis.de>
+ * @copyright  Helmut Schottmüller 2009-2013
+ * @author     Helmut Schottmüller <https://github.com/hschottm>
  * @package    Controller
  */
 class CalendarImport extends \Backend

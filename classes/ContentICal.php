@@ -6,8 +6,8 @@ namespace Contao;
  * Class ContentICal
  *
  * Front end content element "ical".
- * @copyright  Helmut Schottmüller 2009
- * @author     Helmut Schottmüller <typolight@aurealis.de>
+ * @copyright  Helmut Schottmüller 2009-2013
+ * @author     Helmut Schottmüller <https://github.com/hschottm>
  * @package    Controller
  */
 class ContentICal extends ContentElement
@@ -196,4 +196,3 @@ class ContentICal extends ContentElement
 	}
 }
 
-?>
