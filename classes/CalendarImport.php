@@ -38,33 +38,52 @@ class CalendarImport extends \Backend
 	{
 		$this->importCalendarWithID($dc->id);
 	}
-	
+
+	public function importAllCalendarsWithICalSource()
+	{
+		$arrCalendars = $this->Database->prepare("SELECT * FROM tl_calendar")
+			->executeUncached()
+			->fetchAllAssoc();
+		if (is_array($arrCalendars))
+		{
+			foreach ($arrCalendars as $arrCalendar)
+			{
+				$this->importCalendarWithData($arrCalendar, true);
+			}
+		}
+	}
+
 	protected function importCalendarWithID($id)
 	{
 		$arrCalendar = $this->Database->prepare("SELECT * FROM tl_calendar WHERE id = ?")
 			->executeUncached($id)
 			->fetchAssoc();
+		$this->importCalendarWithData($arrCalendar);
+	}
+		
+	protected function importCalendarWithData($arrCalendar, $force_import = false)
+	{
 		if ($arrCalendar['ical_source'])
 		{
 			$arrLastchange = $this->Database->prepare("SELECT MAX(tstamp) lastchange FROM tl_calendar_events WHERE pid = ?")
-				->executeUncached($id)
+				->executeUncached($arrCalendar['id'])
 				->fetchAssoc();
 			$last_change = $arrLastchange['lastchange'];
 			if ($last_change == 0) $last_change = $arrCalendar['tstamp'];
-			if ((time() - $last_change > $arrCalendar['ical_cache']) && ($arrCalendar['ical_importing'] != 1 || (time()-$arrCalendar['tstamp']) > 120))
+			if (((time() - $last_change > $arrCalendar['ical_cache']) && ($arrCalendar['ical_importing'] != 1 || (time()-$arrCalendar['tstamp']) > 120)) || $force_import)
 			{
 				$objUpdateStmt = $this->Database->prepare("UPDATE tl_calendar SET tstamp = ?, ical_importing = ? WHERE id = ?")
-					->execute(time(), '1', $id);
+					->execute(time(), '1', $arrCalendar['id']);
 				$this->log('reading cal', 'CalendarImport importFromICS()', TL_GENERAL);
 				// create new from ical file
-				$this->log('Reload iCal Web Calendar ' . $arrCalendar['title'] . ' (' . $id . ')'. ': Triggered by ' . time() . " - " . $last_change . " = " . (time()-$arrLastchange['lastchange']) . " > " . $arrCalendar['ical_cache'] , 'CalendarImport::importCalendarWithID()', TL_GENERAL);
+				$this->log('Reload iCal Web Calendar ' . $arrCalendar['title'] . ' (' . $arrCalendar['id'] . ')'. ': Triggered by ' . time() . " - " . $last_change . " = " . (time()-$arrLastchange['lastchange']) . " > " . $arrCalendar['ical_cache'] , 'CalendarImport::AMQPChannel()', TL_GENERAL);
 				$this->import('CalendarImport');
 				$startDate = (strlen($arrCalendar['ical_source_start'])) ? new Date($arrCalendar['ical_source_start'], $GLOBALS['TL_CONFIG']['dateFormat']) : new Date(time(), $GLOBALS['TL_CONFIG']['dateFormat']);
 				$endDate = (strlen($arrCalendar['ical_source_end'])) ? new Date($arrCalendar['ical_source_end'], $GLOBALS['TL_CONFIG']['dateFormat']) : new Date(time()+$GLOBALS['calendar_ical']['endDateTimeDifferenceInDays']*24*3600, $GLOBALS['TL_CONFIG']['dateFormat']);
 				$tz = array($arrCalendar['ical_timezone'], $arrCalendar['ical_timezone']);
-				$this->CalendarImport->importFromWebICS($id, $arrCalendar['ical_url'], $startDate, $endDate, $tz);
+				$this->CalendarImport->importFromWebICS($arrCalendar['id'], $arrCalendar['ical_url'], $startDate, $endDate, $tz);
 				$objUpdateStmt = $this->Database->prepare("UPDATE tl_calendar SET tstamp = ?, ical_importing = ? WHERE id = ?")
-					->execute(time(), '', $id);
+					->execute(time(), '', $arrCalendar['id']);
 			}
 		}
 	}
