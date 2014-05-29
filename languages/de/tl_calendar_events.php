@@ -16,7 +16,7 @@
  */
  
 $GLOBALS['TL_LANG']['tl_calendar_events']['icssource']['0'] = "Datenquelle";
-$GLOBALS['TL_LANG']['tl_calendar_events']['icssource']['1'] = "Bitte wählen Sie die iCal (.ics) Kalender-Datei oder die CSV-Datei (.csv) aus der Dateiverwaltung, die Sie importieren möchten.";
+$GLOBALS['TL_LANG']['tl_calendar_events']['icssource']['1'] = "Bitte wählen Sie die iCal (.ics) Kalender-Datei oder die CSV-Datei (.csv) von Ihrem Gerät, die Sie importieren möchten.";
 $GLOBALS['TL_LANG']['tl_calendar_events']['import']['0'] = "Kalender-Import";
 $GLOBALS['TL_LANG']['tl_calendar_events']['import']['1'] = "Importieren Sie Termine aus einer iCal-Datei (.ics) oder einer CSV-Datei (.csv)";
 $GLOBALS['TL_LANG']['tl_calendar_events']['check'] = "Überprüfen";

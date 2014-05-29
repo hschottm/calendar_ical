@@ -4,15 +4,17 @@
 </div>
 
 <h2 class="sub_headline"><?php echo $this->headline; ?></h2>
+<?php echo $this->message; ?>
 
-<form action="<?php echo $this->request; ?>" id="tl_import_calendar" class="tl_form" method="post">
+<form action="<?php echo $this->request; ?>" id="tl_import_calendar" class="tl_form" method="post" enctype="multipart/form-data">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_import_calendar" />
 <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
+<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $this->max_file_size; ?>">
 
 <div class="tl_tbox">
   <h3><?php echo $this->icssource->generateLabel(); ?></h3>
-  <?php echo $this->icssource->generateWithError(); if ($this->icssource->help): ?> 
+	<?php echo $this->markup; if ($this->icssource->help): ?> 
   <p class="tl_help"><?php echo $this->icssource->help; ?></p><?php endif; ?> 
 
   <h3><?php echo $this->startDate->generateLabel(); ?></h3>

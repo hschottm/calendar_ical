@@ -818,7 +818,7 @@ class CalendarImport extends \Backend
 							if (is_array($rrule))
 							{
 								$arrFields['recurring'] = 1;
-								$arrFields['recurrences'] = (array_key_exists('count', $rrule)) ? $rrule['count'] : 0;
+								$arrFields['recurrences'] = (array_key_exists('COUNT', $rrule)) ? $rrule['COUNT'] : 0;
 								$repeatEach = array();
 								switch ($rrule['FREQ'])
 								{
@@ -957,9 +957,30 @@ class CalendarImport extends \Backend
 			return '';
 		}
 
+		$this->import('BackendUser', 'User');
+		$class = $this->User->uploader;
+
+		// See #4086
+		if (!class_exists($class))
+		{
+			$class = 'FileUpload';
+		}
+
+		$objUploader = new $class();
+
 		$this->loadLanguageFile("tl_calendar_events");
 		$this->Template = new BackendTemplate('be_import_calendar');
 
+		$class = $this->User->uploader;
+
+		// See #4086
+		if (!class_exists($class))
+		{
+			$class = 'FileUpload';
+		}
+
+		$objUploader = new $class();
+		$this->Template->markup = $objUploader->generateMarkup();
 		$this->Template->icssource = $this->getFileTreeWidget();
 		$year = date('Y', time());
 		$defaultTimeShift = 0;
@@ -971,6 +992,8 @@ class CalendarImport extends \Backend
 		$this->Template->endDate = $this->getEndDateWidget($defaultEndDate);
 		$this->Template->timeshift = $this->getTimeShiftWidget($defaultTimeShift);
 		$this->Template->deleteCalendar = $this->getDeleteWidget();
+		$this->Template->max_file_size = $GLOBALS['TL_CONFIG']['maxFileSize'];
+		$this->Template->message = \Message::generate();
 
 		$this->Template->hrefBack = ampersand(str_replace('&key=import', '', \Environment::get('request')));
 		$this->Template->goBack = $GLOBALS['TL_LANG']['MSC']['goBack'];
@@ -981,13 +1004,52 @@ class CalendarImport extends \Backend
 		// Create import form
 		if (\Input::post('FORM_SUBMIT') == 'tl_import_calendar' && $this->blnSave)
 		{
-			$startDate = new Date($this->Template->startDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
-			$endDate = new Date($this->Template->endDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
-			$file = \FilesModel::findOneById($this->Template->icssource->value);
-			if ($file)
+			$arrUploaded = $objUploader->uploadTo('system/tmp');
+			if (empty($arrUploaded))
 			{
+				\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				$this->reload();
+			}
+
+			$arrFiles = array();
+
+			foreach ($arrUploaded as $strFile)
+			{
+				// Skip folders
+				if (is_dir(TL_ROOT . '/' . $strFile))
+				{
+					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['importFolder'], basename($strFile)));
+					continue;
+				}
+
+				$objFile = new \File($strFile, true);
+
+				// Skip anything but .cto files
+				if ($objFile->extension != 'ics' && $objFile->extension != 'csv')
+				{
+					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));
+					continue;
+				}
+
+				$arrFiles[] = $strFile;
+			}
+			if (empty($arrFiles))
+			{
+				\Message::addError($GLOBALS['TL_LANG']['ERR']['all_fields']);
+				$this->reload();
+			}
+			else if (count($arrFiles) > 1)
+			{
+				\Message::addError($GLOBALS['TL_LANG']['ERR']['only_one_file']);
+				$this->reload();
+			}
+			else
+			{
+				$startDate = new Date($this->Template->startDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
+				$endDate = new Date($this->Template->endDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
 				$deleteCalendar = $this->Template->deleteCalendar->value;
 				$timeshift = $this->Template->timeshift->value;
+				$file = new \File($arrFiles[0], true);
 				if (strcmp(strtolower($file->extension), 'ics') == 0)
 				{
 					$this->importFromICSFile($file->path, $dc, $startDate, $endDate, null, null, $deleteCalendar, $timeshift);

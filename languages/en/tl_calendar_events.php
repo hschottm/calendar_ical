@@ -8,7 +8,7 @@
  * @filesource
  */
 
-$GLOBALS['TL_LANG']['tl_calendar_events']['icssource']             = array('File source', 'Please choose the iCal (.ics) or CSV (.csv) file you want to import from the files directory.');
+$GLOBALS['TL_LANG']['tl_calendar_events']['icssource']             = array('File source', 'Please choose the iCal (.ics) or CSV (.csv) file you want to import from your device.');
 $GLOBALS['TL_LANG']['tl_calendar_events']['import']                = array('Calendar import', 'Import events from an iCal (.ics) or CSV (.csv) file');
 $GLOBALS['TL_LANG']['tl_calendar_events']['check']                = 'Check';
 $GLOBALS['TL_LANG']['tl_calendar_events']['untitled']                = 'Untitled';

@@ -8,5 +8,6 @@ $GLOBALS['TL_LANG']['CTE']['ical']  = array('iCal', 'This element contains a hyp
 $GLOBALS['TL_LANG']['MSC']['import_calendar']    = array('Import calendar', 'Import an iCal (.ics) file with events into your calendar.');
 $GLOBALS['TL_LANG']['MSC']['export_calendar']    = array('Export calendar', 'Export an iCal (.ics) file with events from your calendar.');
 $GLOBALS['TL_LANG']['MSC']['location']    = 'Location';
+$GLOBALS['TL_LANG']['ERR']['only_one_file'] = "Please choose only one file for upload!";
 
 ?>
