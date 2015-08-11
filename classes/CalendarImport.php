@@ -663,7 +663,7 @@ class CalendarImport extends \Backend
 		$defaultFields = array();
 		foreach ($fields as $fieldarr)
 		{
-			if (strcmp($fieldarr['name'], 'id') != 0 && strcmp($fieldarr['name'], 'PRIMARY') != 0) 
+			if (strcmp($fieldarr['name'], 'id') != 0 && strcmp($fieldarr['type'], 'index') != 0) 
 			{
 				if (strlen($fieldarr['default']))
 				{
