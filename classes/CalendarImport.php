@@ -1024,7 +1024,6 @@ class CalendarImport extends \Backend
 
 				$objFile = new \File($strFile, true);
 
-				// Skip anything but .cto files
 				if ($objFile->extension != 'ics' && $objFile->extension != 'csv')
 				{
 					\Message::addError(sprintf($GLOBALS['TL_LANG']['ERR']['filetype'], $objFile->extension));

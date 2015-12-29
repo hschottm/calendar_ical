@@ -177,7 +177,25 @@ class CalendarExport extends \Backend
 					}
 				}
 				$vevent->setProperty( 'summary', html_entity_decode((strlen($title_prefix) ? $title_prefix . " " : "") . $objEvents->title, ENT_QUOTES, 'UTF-8'));
-				$vevent->setProperty( 'description', html_entity_decode(strip_tags(preg_replace('/<br \\/>/', "\n", $this->replaceInsertTags($objEvents->details))), ENT_QUOTES, 'UTF-8'));
+				$vevent->setProperty( 'description', html_entity_decode(strip_tags(preg_replace('/<br \\/>/', "\n", $this->replaceInsertTags($objEvents->teaser))), ENT_QUOTES, 'UTF-8'));
+
+				/*
+				$strDetails = '';
+				$objElement = \ContentModel::findPublishedByPidAndTable($objEvents->id, 'tl_calendar_events');
+				if ($objElement !== null)
+				{
+					while ($objElement->next())
+					{
+						$strDetails .= $this->getContentElement($objElement->current());
+					}
+				}
+				if (strlen($strDetails) > 0)
+				{
+					// add attachment
+					$vevent->setProperty('attach', base64_encode($strDetails), array( "FMTTYPE" => "text/html", "ENCODING" => "BASE64", "VALUE" => "BINARY"));
+				}
+				*/
+
 				if ($objEvents->cep_location)
 				{
 					$vevent->setProperty( 'location', trim(html_entity_decode($objEvents->cep_location, ENT_QUOTES, 'UTF-8')));
