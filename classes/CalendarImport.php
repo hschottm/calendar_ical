@@ -252,7 +252,9 @@ class CalendarImport extends \Backend
 				{
 					while ($event->next())
 					{
-						$content = \ContentModel::findBy(array('ptable','pid'),array('tl_calendar_events',$event->id));
+						$arrColumns = array("ptable=? AND pid=?");
+						$arrValues = array('tl_calendar_events',$event->id);
+						$content = \ContentModel::findBy($arrColumns,$arrValues);
 						if ($content)
 						{
 							while ($content->next())
@@ -693,7 +695,9 @@ class CalendarImport extends \Backend
 			{
 				while ($event->next())
 				{
-					$content = \ContentModel::findBy(array('ptable','pid'),array('tl_calendar_events',$event->id));
+					$arrColumns = array("ptable=? AND pid=?");
+					$arrValues = array('tl_calendar_events',$event->id);
+					$content = \ContentModel::findBy($arrColumns,$arrValues);
 					if ($content)
 					{
 						while ($content->next())
