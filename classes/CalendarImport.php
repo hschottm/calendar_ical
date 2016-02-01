@@ -428,6 +428,7 @@ class CalendarImport extends \Backend
 								foreach ($eventcontent as $content)
 								{
 									$cm = new \ContentModel();
+									$cm->tstamp = time();
 									$cm->pid = $insertID;
 									$cm->ptable = 'tl_calendar_events';
 									$cm->sorting = $step;
@@ -858,6 +859,7 @@ class CalendarImport extends \Backend
 										foreach ($eventcontent as $content)
 										{
 											$cm = new ContentModel();
+											$cm->tstamp = time();
 											$cm->pid = $insertID;
 											$cm->ptable = 'tl_calendar_events';
 											$cm->sorting = $step;
