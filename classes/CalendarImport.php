@@ -410,6 +410,10 @@ class CalendarImport extends \Backend
 					}
 					$startDate = new Date($this->Session->get('csv_startdate'), $GLOBALS['TL_CONFIG']['dateFormat']);
 					$endDate = new Date($this->Session->get('csv_enddate'), $GLOBALS['TL_CONFIG']['dateFormat']);
+					if (!array_key_exists('source', $arrFields))
+					{
+						$arrFields['source'] = 'default';
+					}
 					if ($arrFields['endDate'] < $startDate->tstamp || (strlen($this->Session->get('csv_enddate')) && ($arrFields['startDate'] > $endDate->tstamp)))
 					{
 						// date is not in range
