@@ -1,0 +1,43 @@
+{
+  "name": "craffft/contao-calendar-ical-bundle",
+  "type": "symfony-bundle",
+  "description": "iCal support for calendar of Contao OpenSource CMS",
+  "keywords": [
+    "ical",
+    "calendar",
+    "contao"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Helmut Schottmüller",
+      "homepage": "https://github.com/hschottm"
+    },
+    {
+      "name": "Daniel Kiesel",
+      "email": "daniel@craffft.de",
+      "homepage": "http://craffft.de"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/Craffft/contao-calendar-ical-bundle/issues",
+    "source": "https://github.com/Craffft/contao-calendar-ical-bundle"
+  },
+  "require": {
+    "php": ">=5.6.0",
+    "contao/core-bundle": "^4.2"
+  },
+  "conflict": {
+    "contao/core": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Craffft\\ContaoCalendarIcalBundle\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "4.2.x-dev"
+    }
+  }
+}
