@@ -14,12 +14,12 @@
 ClassLoader::addClasses(array
 (
     // Classes
-    'Contao\CalendarExport' => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/classes/CalendarExport.php',
-    'Contao\CalendarImport' => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/classes/CalendarImport.php',
-    'Contao\ContentICal'    => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/classes/ContentICal.php',
-    'Contao\Csv'            => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/classes/Csv.php',
-    'Contao\CsvParser'      => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/classes/CsvParser.php',
-    'Contao\CsvReader'      => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/classes/CsvReader.php',
+    'Contao\CalendarExport' => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/classes/CalendarExport.php',
+    'Contao\CalendarImport' => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/classes/CalendarImport.php',
+    'Contao\ContentICal'    => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/classes/ContentICal.php',
+    'Contao\Csv'            => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/classes/Csv.php',
+    'Contao\CsvParser'      => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/classes/CsvParser.php',
+    'Contao\CsvReader'      => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/classes/CsvReader.php',
 ));
 
 /**
@@ -27,8 +27,8 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-    'be_import_calendar'              => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/templates',
-    'be_import_calendar_confirmation' => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/templates',
-    'be_import_calendar_csv_headers'  => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/templates',
-    'ce_ical'                         => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/templates',
+    'be_import_calendar'              => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/templates',
+    'be_import_calendar_confirmation' => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/templates',
+    'be_import_calendar_csv_headers'  => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/templates',
+    'ce_ical'                         => 'vendor/craffft/contao-calendar-ical-bundle/src/Resources/contao/templates',
 ));
