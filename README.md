@@ -36,7 +36,7 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new Craffft\ContaoCalendarIcalBundle\CraffftContaoCalendarIcalBundle(),
+            new Craffft\ContaoCalendarICalBundle\CraffftContaoCalendarICalBundle(),
         );
 
         // ...

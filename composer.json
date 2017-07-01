@@ -33,7 +33,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Craffft\\ContaoCalendarIcalBundle\\": "src/"
+      "Craffft\\ContaoCalendarICalBundle\\": "src/"
     }
   },
   "extra": {

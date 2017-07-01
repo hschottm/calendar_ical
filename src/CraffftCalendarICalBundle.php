@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Craffft\CalendarICalBundle;
+namespace Craffft\ContaoCalendarICalBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Configures the Craffft Translation Fields Bundle.
  */
-class CraffftCalendarICalBundle extends Bundle
+class CraffftContaoCalendarICalBundle extends Bundle
 {
 }
