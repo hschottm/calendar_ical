@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
  * @copyright  Helmut Schottmüller 2009
@@ -22,5 +22,3 @@ $GLOBALS['TL_LANG']['tl_content']['ical_prefix'] = array('Title prefix', 'Here y
  * Legends
  */
 $GLOBALS['TL_LANG']['tl_content']['calendar_legend']      = 'Calendar settings';
-
-?>

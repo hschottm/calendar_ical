@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
  * @copyright  Helmut Schottmüller 2009-2012
@@ -29,5 +29,3 @@ $GLOBALS['TL_LANG']['tl_calendar_events']['importTimeShift']            = array(
 $GLOBALS['TL_LANG']['tl_calendar_events']['preview'] = "Data preview";
 $GLOBALS['TL_LANG']['tl_calendar_events']['fields'] = "Fields";
 $GLOBALS['TL_LANG']['tl_calendar_events']['details']      = array('Event text', 'Here you can enter the event text.');
-
-?>

@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
  * @copyright  Helmut Schottmüller 2009
@@ -27,5 +27,3 @@ $GLOBALS['TL_LANG']['tl_calendar']['ical_end']      = array('End date', 'Please 
  * Legends
  */
 $GLOBALS['TL_LANG']['tl_calendar']['ical_legend']      = 'iCal settings';
-
-?>
