@@ -2,6 +2,9 @@
 
 namespace Contao;
 
+use kigkonsult\iCalcreator\vcalendar;
+use kigkonsult\iCalcreator\vevent;
+
 /**
  * Class ContentICal
  *
@@ -103,7 +106,7 @@ class ContentICal extends ContentElement
             return array();
         }
 
-        $this->ical = new \vcalendar();
+        $this->ical = new vcalendar();
         $this->ical->setConfig('ical_' . $this->id, 'aurealis.de');
         $this->ical->setProperty('method', 'PUBLISH');
         $this->ical->setProperty("x-wr-calname",
@@ -124,7 +127,7 @@ class ContentICal extends ContentElement
             }
 
             while ($objEvents->next()) {
-                $vevent = new \vevent();
+                $vevent = new vevent();
 
                 if ($objEvents->addTime) {
                     $vevent->setProperty('dtstart', array(

@@ -25,7 +25,8 @@
   },
   "require": {
     "php": ">=5.6.0",
-    "contao/core-bundle": "^4.2"
+    "contao/core-bundle": "^4.2",
+    "kigkonsult/icalcreator": "^2.23"
   },
   "conflict": {
     "contao/core": "*"

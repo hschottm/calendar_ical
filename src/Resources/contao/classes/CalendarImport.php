@@ -9,6 +9,8 @@
 
 namespace Contao;
 
+use kigkonsult\iCalcreator\vcalendar;
+
 /**
  * Class CalendarImport
  *
@@ -98,7 +100,7 @@ class CalendarImport extends \Backend
 
     public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone)
     {
-        $this->cal = new \vcalendar();
+        $this->cal = new vcalendar();
         $this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
         $this->cal->setProperty('method', 'PUBLISH');
         $this->cal->setProperty("x-wr-calname", $this->strTitle);
@@ -620,7 +622,7 @@ class CalendarImport extends \Backend
         $timeshift = 0
     ) {
         $pid = $dc->id;
-        $this->cal = new \vcalendar();
+        $this->cal = new vcalendar();
         $this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
         $this->cal->setProperty('method', 'PUBLISH');
         $this->cal->setProperty("x-wr-calname", $this->strTitle);
