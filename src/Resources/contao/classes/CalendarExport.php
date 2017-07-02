@@ -61,8 +61,7 @@ class CalendarExport extends \Backend
             $filename = strlen($objCalendar->ical_alias) ? $objCalendar->ical_alias : 'calendar' . $objCalendar->id;
 
             $this->generateFiles($objCalendar->row());
-            $this->log('Generated ical subscription "' . $filename . '.ics"', 'CalendarExport generateSubscriptions()',
-                TL_CRON);
+            \System::log('Generated ical subscription "' . $filename . '.ics"', __METHOD__, TL_CRON);
         }
     }
 
@@ -81,7 +80,7 @@ class CalendarExport extends \Backend
         $ical = $this->getAllEvents(array($arrArchive['id']), $startdate, $enddate, $arrArchive['title'],
             $arrArchive['ical_description'], $filename, $arrArchive['ical_prefix']);
         $content = $ical->createCalendar();
-        $objFile = new File($filename . ".ics");
+        $objFile = new \File('web/share/' . $filename . '.ics');
         $objFile->write($content);
         $objFile->close();
     }
@@ -102,8 +101,8 @@ class CalendarExport extends \Backend
         include(TL_ROOT . '/system/config/dcaconfig.php');
 
         // Delete old files
-        foreach (scan(TL_ROOT) as $file) {
-            if (is_dir(TL_ROOT . '/' . $file)) {
+        foreach (scan(TL_ROOT . '/web/share') as $file) {
+            if (is_dir(TL_ROOT . '/web/share/' . $file)) {
                 continue;
             }
 
@@ -111,18 +110,16 @@ class CalendarExport extends \Backend
                 continue;
             }
 
-            $objFile = new \File($file);
+            $objFile = new \File('web/share/' . $file);
 
             if (
-                $objFile->extension == 'ics'
+                $objFile->extension === 'ics'
                 && !in_array($objFile->filename, $arrFeeds)
                 && !preg_match('/^sitemap/i', $objFile->filename)
             ) {
-                $this->log('file ' . $objFile->filename, '', TL_CRON);
+                \System::log('file ' . $objFile->filename, __METHOD__, TL_CRON);
                 $objFile->delete();
             }
-
-            $objFile->close();
         }
 
         return array();
