@@ -1,11 +1,13 @@
 <?php
 
-/**
- * Contao Open Source CMS
+/*
+ * This file is part of the Contao Calendar iCal Bundle.
  *
- * Copyright (c) 2005-2015 Leo Feyer
+ * (c) Helmut Schottmüller 2009-2013 <https://github.com/hschottm>
+ * (c) Daniel Kiesel 2017 <https://github.com/iCodr8>
  *
- * @license LGPL-3.0+
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**

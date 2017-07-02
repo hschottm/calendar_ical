@@ -1,15 +1,17 @@
 <?php
 
+/*
+ * This file is part of the Contao Calendar iCal Bundle.
+ *
+ * (c) Helmut Schottmüller 2009-2013 <https://github.com/hschottm>
+ * (c) Daniel Kiesel 2017 <https://github.com/iCodr8>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Contao;
 
-/**
- * Class Csv
- *
- * CSV parser class for "ical".
- * @copyright  Helmut Schottmüller 2012-2013
- * @author     Helmut Schottmüller <https://github.com/hschottm>
- * @package    Controller
- */
 class Csv
 {
     // take a CSV line (utf-8 encoded) and returns an array

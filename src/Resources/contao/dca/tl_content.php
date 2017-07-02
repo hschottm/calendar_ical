@@ -1,7 +1,13 @@
 <?php
 
-/**
- * Table tl_content
+/*
+ * This file is part of the Contao Calendar iCal Bundle.
+ *
+ * (c) Helmut Schottmüller 2009-2013 <https://github.com/hschottm>
+ * (c) Daniel Kiesel 2017 <https://github.com/iCodr8>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['ical'] = '{type_legend},type,headline;{calendar_legend},ical_calendar,ical_start,ical_end,ical_prefix;{link_legend},linkTitle;{protected_legend:hide},protected;{expert_legend},{expert_legend:hide},guests,cssID,space';
@@ -50,14 +56,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['ical_end'] = array
     'sql'                     => "varchar(12) NOT NULL default ''"
 );
 
-/**
- * Class tl_content_ical
- *
- * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  Helmut Schottmüller 2009-2013
- * @author     Helmut Schottmüller <https://github.com/hschottm>
- * @package    Controller
- */
+
 class tl_content_ical extends Backend
 {
     /**

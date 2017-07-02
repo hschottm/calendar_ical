@@ -1,11 +1,13 @@
 <?php
 
-/**
- * @copyright  Helmut Schottmüller 2009-2012
- * @author     Helmut Schottmüller <contao@aurealis.de>
- * @package    calendar_ical
- * @license    LGPL
- * @filesource
+/*
+ * This file is part of the Contao Calendar iCal Bundle.
+ *
+ * (c) Helmut Schottmüller 2009-2013 <https://github.com/hschottm>
+ * (c) Daniel Kiesel 2017 <https://github.com/iCodr8>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 $GLOBALS['TL_LANG']['tl_calendar_events']['icssource']             = array('File source', 'Please choose the iCal (.ics) or CSV (.csv) file you want to import from your device.');

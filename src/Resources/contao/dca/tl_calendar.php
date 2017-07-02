@@ -1,7 +1,13 @@
 <?php
 
-/**
- * Table tl_content
+/*
+ * This file is part of the Contao Calendar iCal Bundle.
+ *
+ * (c) Helmut Schottmüller 2009-2013 <https://github.com/hschottm>
+ * (c) Daniel Kiesel 2017 <https://github.com/iCodr8>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 $GLOBALS['TL_DCA']['tl_calendar']['config']['onload_callback'][] = array('tl_calendar_ical', 'generate_ical');
@@ -149,14 +155,7 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_importing'] = array
     'sql'                     => "char(1) NOT NULL default ''"
 );
 
-/**
- * Class tl_calendar_ical
- *
- * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  Helmut Schottmüller 2009-2013
- * @author     Helmut Schottmüller <https://github.com/hschottm>
- * @package    Controller
- */
+
 class tl_calendar_ical extends Backend
 {
     public function getTZ()
