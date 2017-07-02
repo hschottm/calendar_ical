@@ -1,6 +1,6 @@
 {
   "name": "craffft/contao-calendar-ical-bundle",
-  "type": "symfony-bundle",
+  "type": "contao-bundle",
   "description": "iCal support for calendar of Contao OpenSource CMS",
   "keywords": [
     "ical",
