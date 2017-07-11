@@ -28,6 +28,9 @@
     "contao/core-bundle": ">=4.2,<5.0",
     "kigkonsult/icalcreator": "^2.23"
   },
+  "require-dev": {
+    "contao/manager-plugin": "^2.0"
+  },
   "conflict": {
     "contao/core": "*"
   },
