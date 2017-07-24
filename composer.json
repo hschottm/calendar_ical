@@ -42,7 +42,7 @@
   "extra": {
     "branch-alias": {
       "dev-develop": "4.2.x-dev"
-    }
+    },
     "contao-manager-plugin": "Craffft\\ContaoCalendarICalBundle\\ContaoManager\\Plugin"
   }
 }
