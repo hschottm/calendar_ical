@@ -1,11 +1,10 @@
 <?php
 
-namespace Craffft\ContaoCalendarICalBundle;
+namespace Craffft\ContaoCalendarICalBundle\ContaoManager;
 
-use Contao\CoreBundle\ContaoCoreBundle;
+use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 
 class Plugin implements BundlePluginInterface
 {
@@ -14,10 +13,10 @@ class Plugin implements BundlePluginInterface
 	 */
 	public function getBundles(ParserInterface $parser)
 	{
-		return [
-			BundleConfig::create(CraffftContaoCalendarICalBundle::class)
-				->setLoadAfter([ContaoCoreBundle::class])
-				->setReplace(['contaocalendar-ical-bundle']),
-		];
+        return [
+            BundleConfig::create('Craffft\ContaoCalendarICalBundle\CraffftContaoCalendarICalBundle')
+                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle'])
+                ->setReplace(['cto-calendar-ical-bundle']),
+        ];
 	}
 }
