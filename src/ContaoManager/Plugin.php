@@ -16,7 +16,7 @@ class Plugin implements BundlePluginInterface
         return [
             BundleConfig::create('Craffft\ContaoCalendarICalBundle\CraffftContaoCalendarICalBundle')
                 ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle'])
-                ->setReplace(['cto-calendar-ical-bundle']),
+                ->setReplace(['contao-calendar-ical-bundle']),
         ];
 	}
 }
