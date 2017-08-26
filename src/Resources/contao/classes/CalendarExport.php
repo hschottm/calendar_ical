@@ -93,7 +93,7 @@ class CalendarExport extends \Backend
         }
 
         // Make sure dcaconfig.php is loaded
-        // include(TL_ROOT . '/system/config/dcaconfig.php');
+        include(TL_ROOT . '/system/config/dcaconfig.php');
 
         // Delete old files
         foreach (scan(TL_ROOT . '/web/share') as $file) {
