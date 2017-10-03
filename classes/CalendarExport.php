@@ -34,8 +34,10 @@ class CalendarExport extends \Backend
 			return;
 		}
 
-		$filename = strlen($objCalendar->ical_alias) ? $objCalendar->ical_alias : 'calendar' . $objCalendar->id;
+		//$filename = strlen($objCalendar->ical_alias) ? $objCalendar->ical_alias : 'calendar' . $objCalendar->id;
 
+        $filename = $this->getICalFilename($objCalendar);
+        
 		// Delete ics file
 		if (\Input::get('act') == 'delete')
 		{
@@ -62,8 +64,8 @@ class CalendarExport extends \Backend
 
 		while ($objCalendar->next())
 		{
-			$filename = strlen($objCalendar->ical_alias) ? $objCalendar->ical_alias : 'calendar' . $objCalendar->id;
-
+			//$filename = strlen($objCalendar->ical_alias) ? $objCalendar->ical_alias : 'calendar' . $objCalendar->id;
+            $filename = $this->getICalFilename($objCalendar);
 			$this->generateFiles($objCalendar->row());
 			$this->log('Generated ical subscription "' . $filename . '.ics"', 'CalendarExport generateSubscriptions()', TL_CRON);
 		}
@@ -81,13 +83,27 @@ class CalendarExport extends \Backend
 
 		$startdate = (strlen($arrArchive['ical_start'])) ? $arrArchive['ical_start'] : time();
 		$enddate = (strlen($arrArchive['ical_end'])) ? $arrArchive['ical_end'] : time()+$GLOBALS['calendar_ical']['endDateTimeDifferenceInDays']*24*3600;
-		$filename = strlen($arrArchive['ical_alias']) ? $arrArchive['ical_alias'] : 'calendar' . $arrArchive['id'];
-		$ical = $this->getAllEvents(array($arrArchive['id']), $startdate, $enddate, $arrArchive['title'], $arrArchive['ical_description'], $filename, $arrArchive['ical_prefix']);
+		//$filename = strlen($arrArchive['ical_alias']) ? $arrArchive['ical_alias'] : 'calendar' . $arrArchive['id'];
+        $filename = $this->getICalFilename($arrArchive);		
+        $ical = $this->getAllEvents(array($arrArchive['id']), $startdate, $enddate, $arrArchive['title'], $arrArchive['ical_description'], $filename, $arrArchive['ical_prefix']);
 		$content = $ical->createCalendar();
 		$objFile = new File($filename . ".ics");
 		$objFile->write($content);
 		$objFile->close();
 	}
+
+    private function getICalFilename($archive)
+    {
+        $cm_icalBasepath = \Config::get('cm_icalBasepath');
+        if ($cm_icalBasepath) $cm_icalBasepath.='/'; 
+        
+        if (is_array($archive))
+        {
+            return $cm_icalBasepath.(strlen($archive['ical_alias']) ? $archive['ical_alias'] : 'calendar' . $archive['id']);
+        }
+        return $cm_icalBasepath.(strlen($archive->ical_alias) ? $archive->ical_alias : 'calendar' . $archive->id);
+        
+    }
 
 	/**
 	 * Remove old ics files from the root directory
@@ -99,16 +115,18 @@ class CalendarExport extends \Backend
 
 		while ($objFeeds->next())
 		{
-			$arrFeeds[] = strlen($objFeeds->ical_alias) ? $objFeeds->ical_alias : 'calendar' . $objFeeds->id;
+			//$arrFeeds[] =  strlen($objFeeds->ical_alias) ? $objFeeds->ical_alias : 'calendar' . $objFeeds->id;
+			$arrFeeds[] =  $this->getICalFilename($objFeeds);
 		}
 
 		// Make sure dcaconfig.php is loaded
 		include(TL_ROOT . '/system/config/dcaconfig.php');
-
-		// Delete old files
-		foreach (scan(TL_ROOT) as $file)
+        $cm_icalBasepath = TL_ROOT.'/'.\Config::get('cm_icalBasepath');
+        
+        // Delete old files
+		foreach (scan($cm_icalBasepath) as $file)
 		{
-			if (is_dir(TL_ROOT . '/' . $file))
+			if (is_dir($cm_icalBasepath . '/' . $file))
 			{
 				continue;
 			}
@@ -127,7 +145,31 @@ class CalendarExport extends \Backend
 
 			$objFile->close();
 		}
-		return array();
+        if ($cm_icalBasepath)
+        {
+    		foreach (scan(TL_ROOT) as $file)
+    		{
+    			if (is_dir(TL_ROOT . '/' . $file))
+    			{
+    				continue;
+    			}
+    
+    			if (is_array($GLOBALS['TL_CONFIG']['rootFiles']) && in_array($file, $GLOBALS['TL_CONFIG']['rootFiles']))
+    			{
+    				continue;
+    			}
+    
+    			$objFile = new \File($file);
+    			if ($objFile->extension == 'ics' && !in_array($objFile->filename, $arrFeeds) && !preg_match('/^sitemap/i', $objFile->filename))
+    			{
+    				$this->log('file ' . $objFile->filename, '', TL_CRON);
+    				$objFile->delete();
+    			}
+    
+    			$objFile->close();
+    		}
+		}
+        return array();
 	}
 
 	protected function getAllEvents($arrCalendars, $intStart, $intEnd, $title, $description, $filename = "", $title_prefix)
@@ -178,7 +220,7 @@ class CalendarExport extends \Backend
 				}
 				$vevent->setProperty( 'summary', html_entity_decode((strlen($title_prefix) ? $title_prefix . " " : "") . $objEvents->title, ENT_QUOTES, 'UTF-8'));
 				$vevent->setProperty( 'description', html_entity_decode(strip_tags(preg_replace('/<br \\/>/', "\n", $this->replaceInsertTags($objEvents->teaser))), ENT_QUOTES, 'UTF-8'));
-
+                
 				/*
 				$strDetails = '';
 				$objElement = \ContentModel::findPublishedByPidAndTable($objEvents->id, 'tl_calendar_events');
@@ -228,6 +270,7 @@ class CalendarExport extends \Backend
 				{
 					$count = 0;
 					$arrRepeat = deserialize($objEvents->repeatEach);
+                    
 					$arg = $arrRepeat['value'];
 					$unit = $arrRepeat['unit'];
 					if ($arg == 1)
@@ -282,10 +325,25 @@ class CalendarExport extends \Backend
 				/*
 				* end module event_recurrences handling
 				*/
-
+				$vevent = $this->cm_processModifyVEventHook($vevent, $objEvents);
+								
 				$ical->setComponent ($vevent);
 			}
 		}
 		return $ical;
 	}
+
+	private function cm_processModifyVEventHook($vEvent, $eventData)
+	{
+		if (isset($GLOBALS['TL_HOOKS']['cm_modifyVEvent']) && is_array($GLOBALS['TL_HOOKS']['cm_modifyVEvent']))
+		{
+			foreach ($GLOBALS['TL_HOOKS']['cm_modifyVEvent'] as $callback)
+			{
+				$this->import($callback[0]);
+				$vEvent = $this->{$callback[0]}->{$callback[1]}($vEvent, $eventData);
+			}
+		}
+		return $vEvent;
+	} 
+
 }
