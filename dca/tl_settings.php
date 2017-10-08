@@ -75,9 +75,10 @@ class cm_ICalSettings extends \Backend
   public function loadFile($value)
   {
     //return \String::uuidToBin($value);
-    if(version_compare(VERSION, '3.2', '>='))
+    if($value && version_compare(VERSION, '3.2', '>='))
     {
-        $objFile = FilesModel::findByPath($value);
+    	$objFile = FilesModel::findByPath($value);
+        if ($objFile->numRows<1) return '';
         $value   = $objFile->uuid;
     }
      return $value;
