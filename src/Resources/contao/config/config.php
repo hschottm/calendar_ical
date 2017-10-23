@@ -16,10 +16,7 @@
 $GLOBALS['TL_CTE']['files']['ical'] = 'ContentICal';
 
 $GLOBALS['BE_MOD']['content']['calendar']['import'] = array('CalendarImport', 'importCalendar');
-$GLOBALS['BE_MOD']['content']['calendar'] = array
-(
-'stylesheet' => 'bundles/craffftcontaocalendarical/calendar-ical.css'
-);
+$GLOBALS['BE_MOD']['content']['calendar']['stylesheet'] = 'bundles/craffftcalendarical/calendar-ical.css';
 
 /**
  * Cron jobs
