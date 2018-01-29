@@ -92,8 +92,8 @@ class CalendarExport extends \Backend
             $arrFeeds[] = strlen($objFeeds->ical_alias) ? $objFeeds->ical_alias : 'calendar' . $objFeeds->id;
         }
 
-        // Make sure dcaconfig.php is loaded
-        include(TL_ROOT . '/system/config/dcaconfig.php');
+        // Make sure dcaconfig.php is loaded TEST
+        // include(TL_ROOT . '/system/config/dcaconfig.php');
 
         // Delete old files
         foreach (scan(TL_ROOT . '/web/share') as $file) {
