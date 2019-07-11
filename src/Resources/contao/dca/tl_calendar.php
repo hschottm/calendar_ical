@@ -17,7 +17,7 @@ $GLOBALS['TL_DCA']['tl_calendar']['palettes']['default'] = $GLOBALS['TL_DCA']['t
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'make_ical';
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'ical_source';
 $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['make_ical'] = 'ical_alias,ical_prefix,ical_description,ical_start,ical_end';
-$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['ical_source'] = 'ical_url,ical_timezone,ical_cache,ical_source_start,ical_source_end';
+$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['ical_source'] = 'ical_url,ical_proxy,ical_bnpw,ical_port,ical_timezone,ical_cache,ical_source_start,ical_source_end';
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['make_ical'] = array
 (
@@ -84,6 +84,39 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_description'] = array
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_url'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_url'],
+    'exclude'                 => true,
+    'search'                  => true,
+    'inputType'               => 'text',
+    'eval'                    => array('tl_class'=>'long'),
+    'sql'                     => "text NULL"
+);
+
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_proxy'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_proxy'],
+    'exclude'                 => true,
+    'search'                  => true,
+    'inputType'               => 'text',
+    'eval'                    => array('tl_class'=>'long'),
+    'sql'                     => "text NULL"
+);
+
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_bnpw'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_bnpw'],
+    'exclude'                 => true,
+    'search'                  => true,
+    'inputType'               => 'text',
+    'eval'                    => array('tl_class'=>'long'),
+    'sql'                     => "text NULL"
+);
+
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_port'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_port'],
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
