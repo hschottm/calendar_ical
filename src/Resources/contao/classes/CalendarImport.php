@@ -128,7 +128,8 @@ class CalendarImport extends \Backend
             	if (!empty($proxy)) {
 			
             curl_setopt($ch, CURLOPT_PROXY, "$proxy");
-			curl_setopt($ch, CURLOPT_PROXYUSERPWD , "$benutzerpw");
+            if (!empty($benutzerpw)) {
+			curl_setopt($ch, CURLOPT_PROXYUSERPWD , "$benutzerpw");		}
 			curl_setopt($ch, CURLOPT_PROXYPORT, "$port");
 			}
 
