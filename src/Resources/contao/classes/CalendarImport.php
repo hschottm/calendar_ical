@@ -89,14 +89,14 @@ class CalendarImport extends \Backend
                     $GLOBALS['TL_CONFIG']['dateFormat']);
                 $tz = array($arrCalendar['ical_timezone'], $arrCalendar['ical_timezone']);
                 $this->CalendarImport->importFromWebICS($arrCalendar['id'], $arrCalendar['ical_url'], $startDate,
-                    $endDate, $tz);
+                    $endDate, $tz, $arrCalendar['ical_proxy'],  $arrCalendar['ical_bnpw'], $arrCalendar['ical_port']);
                 $this->Database->prepare("UPDATE tl_calendar SET tstamp = ?, ical_importing = ? WHERE id = ?")
                     ->execute(time(), '', $arrCalendar['id']);
             }
         }
     }
 
-    public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone)
+    public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone, $proxy, $benutzerpw, $port)
     {
         $this->cal = new vcalendar();
         $this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
@@ -105,7 +105,7 @@ class CalendarImport extends \Backend
         $this->cal->setProperty("X-WR-CALDESC", $this->strTitle);
 
         /* start parse of local file */
-        $filename = $this->downloadURLToTempFile($url);
+        $filename = $this->downloadURLToTempFile($url, $proxy, $benutzerpw, $port);
         $this->cal->setConfig('directory', TL_ROOT . '/' . dirname($filename));
         $this->cal->setConfig('filename', basename($filename));
         $this->cal->parse();
@@ -118,13 +118,19 @@ class CalendarImport extends \Backend
         $this->importFromICS($pid, $startDate, $endDate, true, $tz, true);
     }
 
-    protected function downloadURLToTempFile($url)
+    protected function downloadURLToTempFile($url, $proxy, $benutzerpw, $port)
     {
         $url = html_entity_decode($url);
 
         if ($this->isCurlInstalled()) {
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            	if (!empty($proxy)) {
+			
+            curl_setopt($ch, CURLOPT_PROXY, "$proxy");
+			curl_setopt($ch, CURLOPT_PROXYUSERPWD , "$benutzerpw");
+			curl_setopt($ch, CURLOPT_PROXYPORT, "$port");
+			}
 
             if (preg_match("/^https/", $url)) {
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
