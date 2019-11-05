@@ -12,7 +12,7 @@
 
 namespace Contao;
 
-use kigkonsult\iCalcreator\vcalendar;
+use Kigkonsult\Icalcreator\Vcalendar;
 
 class CalendarImport extends \Backend
 {
@@ -98,8 +98,7 @@ class CalendarImport extends \Backend
 
     public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone, $proxy, $benutzerpw, $port)
     {
-        $this->cal = new vcalendar();
-        $this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
+        $this->cal = new Vcalendar();
         $this->cal->setProperty('method', 'PUBLISH');
         $this->cal->setProperty("x-wr-calname", $this->strTitle);
         $this->cal->setProperty("X-WR-CALDESC", $this->strTitle);
@@ -126,7 +125,7 @@ class CalendarImport extends \Backend
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             	if (!empty($proxy)) {
-			
+
             curl_setopt($ch, CURLOPT_PROXY, "$proxy");
             if (!empty($benutzerpw)) {
 			curl_setopt($ch, CURLOPT_PROXYUSERPWD , "$benutzerpw");		}
@@ -627,8 +626,7 @@ class CalendarImport extends \Backend
         $timeshift = 0
     ) {
         $pid = $dc->id;
-        $this->cal = new vcalendar();
-        $this->cal->setConfig('ical_' . $this->id, 'aurealis.de');
+        $this->cal = new Vcalendar();
         $this->cal->setProperty('method', 'PUBLISH');
         $this->cal->setProperty("x-wr-calname", $this->strTitle);
         $this->cal->setProperty("X-WR-CALDESC", $this->strTitle);
