@@ -643,7 +643,7 @@ class CalendarImport extends \Backend
         try {
         $this->cal->parse();
         } catch (Exception $e) {
-            \System::log($e->getMessage(), __METHOD__, TL_ERROR);
+            \Message::addError($e->getMessage());
             $this->redirect(str_replace('&key=import', '', \Environment::get('request')));
         }
         $tz = $this->cal->getProperty('X-WR-TIMEZONE');
