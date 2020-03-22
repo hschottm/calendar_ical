@@ -640,7 +640,12 @@ class CalendarImport extends \Backend
         /* start parse of local file */
         $this->cal->setConfig('directory', TL_ROOT . '/' . dirname($filename));
         $this->cal->setConfig('filename', basename($filename));
+        try {
         $this->cal->parse();
+        } catch (Exception $e) {
+            \System::log($e->getMessage(), __METHOD__, TL_ERROR);
+            $this->redirect(str_replace('&key=import', '', \Environment::get('request')));
+        }
         $tz = $this->cal->getProperty('X-WR-TIMEZONE');
 
         if ($timeshift == 0) {
