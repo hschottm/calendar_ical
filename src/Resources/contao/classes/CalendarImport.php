@@ -641,7 +641,7 @@ class CalendarImport extends \Backend
         $this->cal->setConfig('directory', TL_ROOT . '/' . dirname($filename));
         $this->cal->setConfig('filename', basename($filename));
         try {
-        $this->cal->parse();
+            $this->cal->parse();
         } catch (Exception $e) {
             \Message::addError($e->getMessage());
             $this->redirect(str_replace('&key=import', '', \Environment::get('request')));
