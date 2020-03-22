@@ -138,6 +138,8 @@ class CalendarImport extends \Backend
             }
 
             curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
             $content = curl_exec($ch);
             curl_close($ch);
         } else {
