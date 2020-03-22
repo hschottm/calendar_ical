@@ -12,6 +12,7 @@
 
 namespace Contao;
 
+use Exception;
 use Kigkonsult\Icalcreator\Vcalendar;
 
 class CalendarImport extends \Backend
@@ -107,7 +108,12 @@ class CalendarImport extends \Backend
         $filename = $this->downloadURLToTempFile($url, $proxy, $benutzerpw, $port);
         $this->cal->setConfig('directory', TL_ROOT . '/' . dirname($filename));
         $this->cal->setConfig('filename', basename($filename));
-        $this->cal->parse();
+        try {
+            $this->cal->parse();
+        } catch (Exception $e) {
+            \System::log($e->getMessage(), __METHOD__, TL_ERROR);
+            return;
+        }
         $tz = $this->cal->getProperty('X-WR-TIMEZONE');
 
         if (!is_array($tz) || strlen($tz[1]) == 0) {
