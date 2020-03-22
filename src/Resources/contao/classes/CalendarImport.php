@@ -105,6 +105,9 @@ class CalendarImport extends \Backend
 
         /* start parse of local file */
         $filename = $this->downloadURLToTempFile($url, $proxy, $benutzerpw, $port);
+        if ($filename === null) {
+            return;
+        }
         $this->cal->setConfig('directory', TL_ROOT . '/' . dirname($filename));
         $this->cal->setConfig('filename', basename($filename));
         $this->cal->parse();
@@ -141,9 +144,21 @@ class CalendarImport extends \Backend
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
             $content = curl_exec($ch);
+            if ($content === false) {
+                $content = null;
+            } else {
+                $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                if ($responseCode >= 400) {
+                    $content = null;
+                }
+            }
             curl_close($ch);
         } else {
             $content = file_get_contents($url);
+        }
+
+        if (empty($content)) {
+            return null;
         }
 
         $filename = md5(time());
