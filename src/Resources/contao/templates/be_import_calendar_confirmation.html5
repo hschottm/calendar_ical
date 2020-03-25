@@ -14,18 +14,18 @@
 <input type="hidden" name="endDate" value="<?php echo $this->endDate; ?>" />
 <input type="hidden" name="FORM_SUBMIT" value="tl_import_calendar_confirmation" />
 <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <p><?php echo $this->confirmationText; ?></p>
 </div>
 <?php if ($this->correctTimezone): ?>
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <h3><?php echo $this->correctTimezone->generateLabel(); ?></h3>
   <?php echo $this->correctTimezone->generateWithError(); if ($this->correctTimezone->help): ?>
   <p class="tl_help"><?php echo $this->correctTimezone->help; ?></p><?php endif; ?>
 </div>
 <?php endif; ?>
 <?php if ($this->timezone): ?>
-<div class="tl_box">
+<div class="tl_box clr widget">
   <h3><?php echo $this->timezone->generateLabel(); ?></h3>
   <?php echo $this->timezone->generateWithError(); if ($this->timezone->help): ?>
   <p class="tl_help"><?php echo $this->timezone->help; ?></p><?php endif; ?>
