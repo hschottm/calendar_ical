@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Contao Calendar iCal Bundle.
  *
@@ -24,6 +23,8 @@ $GLOBALS['TL_LANG']['tl_calendar_events']['importEndDate']['0'] = "Enddatum";
 $GLOBALS['TL_LANG']['tl_calendar_events']['importEndDate']['1'] = "Geben Sie das Enddatum für den Kalenderimport an. Alle Termine, die nach diesem Datum auftreten, werden nicht berücksichtigt.";
 $GLOBALS['TL_LANG']['tl_calendar_events']['encoding']['0'] = "Zeichencodierung";
 $GLOBALS['TL_LANG']['tl_calendar_events']['encoding']['1'] = "Bitte geben Sie die Zeichencodierung Ihrer zu importierenden Daten an.";
+$GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle']['0'] = "Termin-Titel filtern";
+$GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle']['1'] = "Geben Sie eine Zeichenkette ein, nach der im Titel des Termins gefiltert werden sollen.";
 $GLOBALS['TL_LANG']['tl_calendar_events']['importDeleteCalendar']['0'] = "Bestehende Termine entfernen";
 $GLOBALS['TL_LANG']['tl_calendar_events']['importDeleteCalendar']['1'] = "Wählen Sie diese Option, wenn Sie die bestehenden Termine in diesem Kalender vor dem Import der neuen Kalenderdaten entfernen wollen.";
 $GLOBALS['TL_LANG']['tl_calendar_events']['correctTimezone']['0'] = "Zeitzone korrigieren";
@@ -42,4 +43,3 @@ $GLOBALS['TL_LANG']['tl_calendar_events']['importTimeShift']['0'] = "Manuelle Ze
 $GLOBALS['TL_LANG']['tl_calendar_events']['importTimeShift']['1'] = "Bitte geben Sie die Anzahl der Stunden an, um die jeder Termin verschoben werden soll. Diese Option sollte nur genutzt werden, wenn die automatische Zeitzonen-Erkennung fehlschlägt.";
 $GLOBALS['TL_LANG']['tl_calendar_events']['preview'] = "Daten-Vorschau";
 $GLOBALS['TL_LANG']['tl_calendar_events']['fields'] = "Felder";
-$GLOBALS['TL_LANG']['tl_calendar_events']['details']      = array('Event-Text', 'Hier können Sie den Event-Text eingeben.');

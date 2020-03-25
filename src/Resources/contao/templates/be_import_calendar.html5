@@ -31,6 +31,10 @@
   window.addEvent('domready', function() { <?php echo $this->endDate->datepicker; ?> });
   //--><!]]></script>
 
+  <h3><?php echo $this->filterEventTitle->generateLabel(); ?></h3>
+  <?php echo $this->filterEventTitle->generateWithError(); if ($this->filterEventTitle->help): ?>
+  <p class="tl_help"><?php echo $this->filterEventTitle->help; ?></p><?php endif; ?>
+
   <h3><?php echo $this->deleteCalendar->generateLabel(); ?></h3>
   <?php echo $this->deleteCalendar->generateWithError(); if ($this->deleteCalendar->help): ?>
   <p class="tl_help"><?php echo $this->deleteCalendar->help; ?></p><?php endif; ?>

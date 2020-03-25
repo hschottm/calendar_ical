@@ -19,6 +19,7 @@ $GLOBALS['TL_LANG']['tl_calendar_events']['timeFormat']                = '%H:%M'
 $GLOBALS['TL_LANG']['tl_calendar_events']['importStartDate']       = array('Start date', 'Please enter the start date for the calendar import. All events occuring before the start date will be omitted.');
 $GLOBALS['TL_LANG']['tl_calendar_events']['importEndDate']         = array('End date', 'Please enter the end date for the calendar import. All events occuring after the end date will be omitted.');
 $GLOBALS['TL_LANG']['tl_calendar_events']['encoding']         = array('Encoding', 'Please select the text encoding of your import data.');
+$GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle']  = array('Filter event title', 'Please enter a string to be filtered in the title of the event.');
 $GLOBALS['TL_LANG']['tl_calendar_events']['importDeleteCalendar']  = array('Remove existing events', 'Choose this option to remove the existing events in this calendar before the new calendar will be imported.');
 $GLOBALS['TL_LANG']['tl_calendar_events']['correctTimezone']       = array('Correct time zone', 'Choose this option to correct the time zone of the import file and assign the current time zone of this TYPOlight installation instead.');
 $GLOBALS['TL_LANG']['tl_calendar_events']['proceed']               = array('Proceed', 'Proceed with the import process.');

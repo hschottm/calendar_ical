@@ -623,7 +623,8 @@ class CalendarImport extends \Backend
         $correctTimezone = null,
         $manualTZ = null,
         $deleteCalendar = false,
-        $timeshift = 0
+        $timeshift = 0,
+        $filterEventTitle = null
     ) {
         $pid = $dc->id;
         $this->cal = new Vcalendar();
@@ -641,13 +642,13 @@ class CalendarImport extends \Backend
             if (is_array($tz) && strlen($tz[1]) && strcmp($tz[1], $GLOBALS['TL_CONFIG']['timeZone']) != 0) {
                 if ($correctTimezone === null) {
                     return $this->getConfirmationForm($dc, $filename, $startDate->date, $endDate->date, $tz[1],
-                        $GLOBALS['TL_CONFIG']['timeZone'], $deleteCalendar);
+                        $GLOBALS['TL_CONFIG']['timeZone'], $deleteCalendar, $filterEventTitle);
                 }
             } else {
                 if (!is_array($tz) || strlen($tz[1]) == 0) {
                     if ($manualTZ === null) {
                         return $this->getConfirmationForm($dc, $filename, $startDate->date, $endDate->date, $tz[1],
-                            $GLOBALS['TL_CONFIG']['timeZone'], $deleteCalendar);
+                            $GLOBALS['TL_CONFIG']['timeZone'], $deleteCalendar, $filterEventTitle);
                     }
                 }
             }
@@ -655,7 +656,7 @@ class CalendarImport extends \Backend
                 $tz[1] = $manualTZ;
             }
         }
-        $this->importFromICS($pid, $startDate, $endDate, $correctTimezone, $tz, $deleteCalendar, $timeshift);
+        $this->importFromICS($pid, $startDate, $endDate, $correctTimezone, $tz, $deleteCalendar, $timeshift, $filterEventTitle);
         $this->redirect(str_replace('&key=import', '', \Environment::get('request')));
     }
 
@@ -666,7 +667,8 @@ class CalendarImport extends \Backend
         $correctTimezone = null,
         $tz,
         $deleteCalendar = false,
-        $timeshift = 0
+        $timeshift = 0,
+        $filterEventTitle = null
     ) {
         $this->cal->sort();
         $this->loadDataContainer('tl_calendar_events');
@@ -729,6 +731,9 @@ class CalendarImport extends \Backend
                 $dtend = $dtendrow['value'];
                 $rrule = $vevent->getProperty('rrule', 1);
                 $summary = $vevent->getProperty('summary');
+                if (!empty($filterEventTitle) && strpos($summary, $filterEventTitle) === false) {
+                    continue;
+                }
                 $descriptionraw = $vevent->getProperty('description', false, true);
                 $description = $descriptionraw['value'];
                 $location = trim($vevent->getProperty('location'));
@@ -925,7 +930,8 @@ class CalendarImport extends \Backend
         $endDate,
         $tzimport,
         $tzsystem,
-        $deleteCalendar
+        $deleteCalendar,
+        $filterEventTitle
     ) {
         $this->Template = new BackendTemplate('be_import_calendar_confirmation');
 
@@ -948,6 +954,7 @@ class CalendarImport extends \Backend
         $this->Template->endDate = $endDate;
         $this->Template->icssource = $icssource;
         $this->Template->deleteCalendar = $deleteCalendar;
+        $this->Template->filterEventTitle = $filterEventTitle;
         $this->Template->hrefBack = ampersand(str_replace('&key=import', '', \Environment::get('request')));
         $this->Template->goBack = $GLOBALS['TL_LANG']['MSC']['goBack'];
         $this->Template->headline = $GLOBALS['TL_LANG']['MSC']['import_calendar'][0];
@@ -996,6 +1003,7 @@ class CalendarImport extends \Backend
         $this->Template->endDate = $this->getEndDateWidget($defaultEndDate);
         $this->Template->timeshift = $this->getTimeShiftWidget($defaultTimeShift);
         $this->Template->deleteCalendar = $this->getDeleteWidget();
+        $this->Template->filterEventTitle = $this->getFilterWidget();
         $this->Template->max_file_size = $GLOBALS['TL_CONFIG']['maxFileSize'];
         $this->Template->message = \Message::generate();
 
@@ -1044,11 +1052,12 @@ class CalendarImport extends \Backend
                     $startDate = new Date($this->Template->startDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
                     $endDate = new Date($this->Template->endDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
                     $deleteCalendar = $this->Template->deleteCalendar->value;
+                    $filterEventTitle = $this->Template->filterEventTitle->value;
                     $timeshift = $this->Template->timeshift->value;
                     $file = new \File($arrFiles[0], true);
                     if (strcmp(strtolower($file->extension), 'ics') == 0) {
                         $this->importFromICSFile($file->path, $dc, $startDate, $endDate, null, null, $deleteCalendar,
-                            $timeshift);
+                            $timeshift, $filterEventTitle);
                     } else {
                         if (strcmp(strtolower($file->extension), 'csv') == 0) {
                             $this->Session->set('csv_pid', $dc->id);
@@ -1068,6 +1077,7 @@ class CalendarImport extends \Backend
                 $endDate = new Date(\Input::post('endDate'), $GLOBALS['TL_CONFIG']['dateFormat']);
                 $filename = \Input::post('icssource');
                 $deleteCalendar = \Input::post('deleteCalendar');
+                $filterEventTitle = $this->Input->post('filterEventTitle');
                 $timeshift = \Input::post('timeshift');
 
                 if (strlen(\Input::post('timezone'))) {
@@ -1079,7 +1089,7 @@ class CalendarImport extends \Backend
                 }
 
                 $this->importFromICSFile($filename, $dc, $startDate, $endDate, $correctTimezone, $timezone,
-                    $deleteCalendar, $timeshift);
+                    $deleteCalendar, $timeshift, $filterEventTitle);
             } else {
                 if (\Input::post('FORM_SUBMIT') == 'tl_csv_headers') {
                     if ($this->blnSave && (strlen(\Input::post('import')))) {
@@ -1343,6 +1353,42 @@ class CalendarImport extends \Backend
 
         // Valiate input
         if (\Input::post('FORM_SUBMIT') == 'tl_import_calendar_confirmation') {
+            $widget->validate();
+
+            if ($widget->hasErrors()) {
+                $this->blnSave = false;
+            }
+        }
+
+        return $widget;
+    }
+
+    /**
+     * Return the filter widget as object
+     * @param mixed
+     * @return object
+     */
+    protected function getFilterWidget($value = "")
+    {
+        $widget = new TextField();
+
+        $widget->id = 'filterEventTitle';
+        $widget->name = 'filterEventTitle';
+        $widget->mandatory = false;
+        $widget->maxlength = 50;
+        $widget->rgxp = 'text';
+        $widget->value = $value;
+
+        $widget->label = $GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle'][0];
+
+        if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen(
+                $GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle'][1]
+            )) {
+            $widget->help = $GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle'][1];
+        }
+
+        // Valiate input
+        if ($this->Input->post('FORM_SUBMIT') == 'tl_import_calendar') {
             $widget->validate();
 
             if ($widget->hasErrors()) {
