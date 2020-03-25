@@ -89,14 +89,14 @@ class CalendarImport extends \Backend
                     $GLOBALS['TL_CONFIG']['dateFormat']);
                 $tz = array($arrCalendar['ical_timezone'], $arrCalendar['ical_timezone']);
                 $this->CalendarImport->importFromWebICS($arrCalendar['id'], $arrCalendar['ical_url'], $startDate,
-                    $endDate, $tz, $arrCalendar['ical_proxy'],  $arrCalendar['ical_bnpw'], $arrCalendar['ical_port']);
+                    $endDate, $tz, $arrCalendar['ical_proxy'],  $arrCalendar['ical_bnpw'], $arrCalendar['ical_port'], $arrCalendar['ical_filter_event_title']);
                 $this->Database->prepare("UPDATE tl_calendar SET tstamp = ?, ical_importing = ? WHERE id = ?")
                     ->execute(time(), '', $arrCalendar['id']);
             }
         }
     }
 
-    public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone, $proxy, $benutzerpw, $port)
+    public function importFromWebICS($pid, $url, $startDate, $endDate, $timezone, $proxy, $benutzerpw, $port, $filterEventTitle)
     {
         $this->cal = new Vcalendar();
         $this->cal->setProperty('method', 'PUBLISH');
@@ -114,7 +114,7 @@ class CalendarImport extends \Backend
             $tz = $timezone;
         }
 
-        $this->importFromICS($pid, $startDate, $endDate, true, $tz, true);
+        $this->importFromICS($pid, $startDate, $endDate, true, $tz, true, 0, $filterEventTitle);
     }
 
     protected function downloadURLToTempFile($url, $proxy, $benutzerpw, $port)
