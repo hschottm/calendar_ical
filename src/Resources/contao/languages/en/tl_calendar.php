@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-$GLOBALS['TL_LANG']['tl_calendar']['ical_alias'] = array('iCal alias', 'Here you can enter a unique filename (without extension). The iCal subscription file will be auto-generated in the root directory of your TYPOlight installation, e.g. as <em>name.ics</em>.');
+$GLOBALS['TL_LANG']['tl_calendar']['ical_alias'] = array('iCal alias', 'Here you can enter a unique filename (without extension). The iCal subscription file will be auto-generated in the root directory of your Contao installation, e.g. as <em>name.ics</em>.');
 $GLOBALS['TL_LANG']['tl_calendar']['ical_prefix'] = array('Title prefix', 'Here you can enter a prefix that will be added to every event title in the iCal subscription.');
 $GLOBALS['TL_LANG']['tl_calendar']['ical_description']    = array('iCal description', 'Please enter a short description of the calendar.');
 $GLOBALS['TL_LANG']['tl_calendar']['make_ical']      = array('Generate iCal subscription', 'Generate an iCal subscription file from the calendar.');

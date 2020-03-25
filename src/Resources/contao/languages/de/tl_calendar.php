@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 $GLOBALS['TL_LANG']['tl_calendar']['ical_alias']['0'] = "Kalender-Alias";
-$GLOBALS['TL_LANG']['tl_calendar']['ical_alias']['1'] = "Hier können Sie einen eindeutigen Dateinamen (ohne Endung) eingeben. Die iCal-Abonnement-Datei wird automatisch im Wurzelverzeichnis Ihrer TYPOlight-Installation erstellt, z.B. als <em>name.ics</em>.";
+$GLOBALS['TL_LANG']['tl_calendar']['ical_alias']['1'] = "Hier können Sie einen eindeutigen Dateinamen (ohne Endung) eingeben. Die iCal-Abonnement-Datei wird automatisch im Wurzelverzeichnis Ihrer Contao-Installation erstellt, z.B. als <em>name.ics</em>.";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_prefix']['0'] = "Titel-Präfix";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_prefix']['1'] = "Bitte geben Sie ein Präfix ein, das in der iCal-Abonnement-Datei vor allen Event-Titeln ausgegeben wird.";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_description']['0'] = "iCal Beschreibung";
@@ -31,7 +31,7 @@ $GLOBALS['TL_LANG']['tl_calendar']['ical_cache']['1'] = "Bitte geben Sie die min
 $GLOBALS['TL_LANG']['tl_calendar']['ical_timezone']['0'] = "Zeitzone";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_timezone']['1'] = "Wählen Sie eine Zeitzone für den Kalender aus, falls im Kalender keine Zeitzone angegeben ist.";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_start']['0'] = "Startdatum";
-$GLOBALS['TL_LANG']['tl_calendar']['ical_start']['1'] = "Bitte geben Sie das Startdatum ein, ab dem TYPOlight Termine aus den ausgewählten Kalendern extrahieren soll. Wenn Sie kein Datum angeben, wird das aktuelle Datum als Startdatum verwendet.";
+$GLOBALS['TL_LANG']['tl_calendar']['ical_start']['1'] = "Bitte geben Sie das Startdatum ein, ab dem Contao Termine aus den ausgewählten Kalendern extrahieren soll. Wenn Sie kein Datum angeben, wird das aktuelle Datum als Startdatum verwendet.";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_end']['0'] = "Enddatum";
-$GLOBALS['TL_LANG']['tl_calendar']['ical_end']['1'] = "Bitte geben Sie das Endatum ein, bis zu dem TYPOlight Termine aus den ausgewählten Kalendern extrahieren soll.  Wenn Sie kein Datum angeben, wird das Datum in einem Jahr als Enddatum verwendet.";
+$GLOBALS['TL_LANG']['tl_calendar']['ical_end']['1'] = "Bitte geben Sie das Endatum ein, bis zu dem Contao Termine aus den ausgewählten Kalendern extrahieren soll.  Wenn Sie kein Datum angeben, wird das Datum in einem Jahr als Enddatum verwendet.";
 $GLOBALS['TL_LANG']['tl_calendar']['ical_legend'] = "iCal Einstellungen";
