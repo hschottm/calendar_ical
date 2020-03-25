@@ -27,6 +27,12 @@ class CalendarImport extends \Backend
     /** @var string */
     protected $filterEventTitle = '';
 
+    /** @var string */
+    protected $patternEventTitle = '';
+
+    /** @var string */
+    protected $replacementEventTitle = '';
+
     public function getAllEvents($arrEvents, $arrCalendars, $intStart, $intEnd)
     {
         $arrCalendars = $this->Database->prepare("SELECT id FROM tl_calendar WHERE id IN (" . join($arrCalendars,
@@ -97,6 +103,8 @@ class CalendarImport extends \Backend
                     $GLOBALS['TL_CONFIG']['dateFormat']);
                 $tz = array($arrCalendar['ical_timezone'], $arrCalendar['ical_timezone']);
                 $this->CalendarImport->filterEventTitle = $arrCalendar['ical_filter_event_title'];
+                $this->CalendarImport->patternEventTitle = $arrCalendar['ical_pattern_event_title'];
+                $this->CalendarImport->replacementEventTitle = $arrCalendar['ical_replacement_event_title'];
                 $this->CalendarImport->importFromWebICS($arrCalendar['id'], $arrCalendar['ical_url'], $startDate,
                     $endDate, $tz, $arrCalendar['ical_proxy'],  $arrCalendar['ical_bnpw'], $arrCalendar['ical_port']);
                 $this->Database->prepare("UPDATE tl_calendar SET tstamp = ?, ical_importing = ? WHERE id = ?")
@@ -760,8 +768,13 @@ class CalendarImport extends \Backend
                 $arrFields['published'] = 1;
                 $arrFields['author'] = ($this->User->id) ? $this->User->id : 0;
 
+                $title = $summary;
+                if (!empty($this->patternEventTitle) && !empty($this->replacementEventTitle)) {
+                    $title = preg_replace($this->patternEventTitle, $this->replacementEventTitle, $title);
+                }
+
                 // set values from vevent
-                $arrFields['title'] = $summary;
+                $arrFields['title'] = !empty($title) ? $title : $summary;
                 $cleanedup = (strlen($description)) ? $description : $summary;
                 $cleanedup = preg_replace("/[\\r](\\\\)n(\\t){0,1}/ims", "", $cleanedup);
                 $cleanedup = preg_replace("/[\\r\\n]/ims", "", $cleanedup);
