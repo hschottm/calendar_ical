@@ -19,7 +19,7 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['list']['global_operations']['export'] 
     array(
         'label'               => &$GLOBALS['TL_LANG']['MSC']['import_calendar'],
         'href'                => 'key=import',
-        'class'               => 'header_import',
+        'class'               => 'header_import header_icon',
         'attributes'          => 'onclick="Backend.getScrollOffset();"'
     );
 
