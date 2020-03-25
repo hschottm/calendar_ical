@@ -98,8 +98,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_proxy'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'long'),
-    'sql'                     => "text NULL"
+    'eval'                    => array('maxlength'=>255, 'tl_class'=>'long'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 
@@ -109,8 +109,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_bnpw'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'long'),
-    'sql'                     => "text NULL"
+    'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 
@@ -120,8 +120,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_port'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'long'),
-    'sql'                     => "text NULL"
+    'eval'                    => array('maxlength'=>35, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(32) NULL"
 );
 
 
