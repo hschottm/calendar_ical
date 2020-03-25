@@ -342,6 +342,14 @@ class CalendarImport extends \Backend
                                         }
                                         break;
                                 }
+
+                                if ($value === 'title')
+                                {
+                                    $filterEventTitle = $this->Session->get('csv_filterEventTitle');
+                                    if (!empty($filterEventTitle) && strpos(specialchars($data[$foundindex]), $filterEventTitle) === false) {
+                                        continue;
+                                    }
+                                }
                             }
                         }
                     }
@@ -1065,6 +1073,7 @@ class CalendarImport extends \Backend
                             $this->Session->set('csv_startdate', $this->Template->startDate->value);
                             $this->Session->set('csv_enddate', $this->Template->endDate->value);
                             $this->Session->set('csv_deletecalendar', $deleteCalendar);
+                            $this->Session->set('csv_filterEventTitle', $filterEventTitle);
                             $this->Session->set('csv_filename', $file->path);
                             $this->importFromCSVFile();
                         }
@@ -1077,7 +1086,7 @@ class CalendarImport extends \Backend
                 $endDate = new Date(\Input::post('endDate'), $GLOBALS['TL_CONFIG']['dateFormat']);
                 $filename = \Input::post('icssource');
                 $deleteCalendar = \Input::post('deleteCalendar');
-                $filterEventTitle = $this->Input->post('filterEventTitle');
+                $filterEventTitle = \Input::post('filterEventTitle');
                 $timeshift = \Input::post('timeshift');
 
                 if (strlen(\Input::post('timezone'))) {
