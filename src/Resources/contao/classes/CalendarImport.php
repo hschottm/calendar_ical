@@ -14,6 +14,11 @@ namespace Contao;
 
 use Kigkonsult\Icalcreator\Vcalendar;
 
+/**
+ * Class CalendarImport
+ * @package Contao
+ * @property CalendarImport $CalendarImport
+ */
 class CalendarImport extends \Backend
 {
     protected $blnSave = true;
@@ -118,7 +123,7 @@ class CalendarImport extends \Backend
             $tz = $timezone;
         }
 
-        $this->importFromICS($pid, $startDate, $endDate, true, $tz, true, 0);
+        $this->importFromICS($pid, $startDate, $endDate, true, $tz, true);
     }
 
     protected function downloadURLToTempFile($url, $proxy, $benutzerpw, $port)
