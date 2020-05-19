@@ -17,7 +17,7 @@ $GLOBALS['TL_DCA']['tl_calendar']['palettes']['default'] = $GLOBALS['TL_DCA']['t
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'make_ical';
 $GLOBALS['TL_DCA']['tl_calendar']['palettes']['__selector__'][] = 'ical_source';
 $GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['make_ical'] = 'ical_alias,ical_prefix,ical_description,ical_start,ical_end';
-$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['ical_source'] = 'ical_url,ical_proxy,ical_bnpw,ical_port,ical_timezone,ical_cache,ical_source_start,ical_source_end';
+$GLOBALS['TL_DCA']['tl_calendar']['subpalettes']['ical_source'] = 'ical_url,ical_proxy,ical_bnpw,ical_port,ical_filter_event_title,ical_pattern_event_title,ical_replacement_event_title,ical_timezone,ical_cache,ical_source_start,ical_source_end';
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['make_ical'] = array
 (
@@ -98,8 +98,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_proxy'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'long'),
-    'sql'                     => "text NULL"
+    'eval'                    => array('maxlength'=>255, 'tl_class'=>'long'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 
@@ -109,8 +109,8 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_bnpw'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'long'),
-    'sql'                     => "text NULL"
+    'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 
@@ -120,8 +120,39 @@ $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_port'] = array
     'exclude'                 => true,
     'search'                  => true,
     'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'long'),
-    'sql'                     => "text NULL"
+    'eval'                    => array('maxlength'=>35, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(32) NULL"
+);
+
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_filter_event_title'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_filter_event_title'],
+    'exclude'                 => true,
+    'filter'                  => true,
+    'inputType'               => 'text',
+    'eval'                    => array('maxlength'=>255, 'tl_class'=>'clr'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_pattern_event_title'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_pattern_event_title'],
+    'exclude'                 => true,
+    'filter'                  => true,
+    'inputType'               => 'text',
+    'eval'                    => array('maxlength'=>255, 'decodeEntities' => true, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_replacement_event_title'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_calendar']['ical_replacement_event_title'],
+    'exclude'                 => true,
+    'filter'                  => true,
+    'inputType'               => 'text',
+    'eval'                    => array('maxlength'=>255, 'decodeEntities' => true, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(255) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_calendar']['fields']['ical_cache'] = array

@@ -14,10 +14,24 @@ namespace Contao;
 
 use Kigkonsult\Icalcreator\Vcalendar;
 
+/**
+ * Class CalendarImport
+ * @package Contao
+ * @property CalendarImport $CalendarImport
+ */
 class CalendarImport extends \Backend
 {
     protected $blnSave = true;
     protected $cal;
+
+    /** @var string */
+    protected $filterEventTitle = '';
+
+    /** @var string */
+    protected $patternEventTitle = '';
+
+    /** @var string */
+    protected $replacementEventTitle = '';
 
     public function getAllEvents($arrEvents, $arrCalendars, $intStart, $intEnd)
     {
@@ -88,6 +102,9 @@ class CalendarImport extends \Backend
                     $GLOBALS['TL_CONFIG']['dateFormat']) : new Date(time() + $GLOBALS['calendar_ical']['endDateTimeDifferenceInDays'] * 24 * 3600,
                     $GLOBALS['TL_CONFIG']['dateFormat']);
                 $tz = array($arrCalendar['ical_timezone'], $arrCalendar['ical_timezone']);
+                $this->CalendarImport->filterEventTitle = $arrCalendar['ical_filter_event_title'];
+                $this->CalendarImport->patternEventTitle = $arrCalendar['ical_pattern_event_title'];
+                $this->CalendarImport->replacementEventTitle = $arrCalendar['ical_replacement_event_title'];
                 $this->CalendarImport->importFromWebICS($arrCalendar['id'], $arrCalendar['ical_url'], $startDate,
                     $endDate, $tz, $arrCalendar['ical_proxy'],  $arrCalendar['ical_bnpw'], $arrCalendar['ical_port']);
                 $this->Database->prepare("UPDATE tl_calendar SET tstamp = ?, ical_importing = ? WHERE id = ?")
@@ -341,6 +358,14 @@ class CalendarImport extends \Backend
                                             $arrFields[$value] = specialchars($data[$foundindex]);
                                         }
                                         break;
+                                }
+
+                                if ($value === 'title')
+                                {
+                                    $this->filterEventTitle = $this->Session->get('csv_filterEventTitle');
+                                    if (!empty($this->filterEventTitle) && strpos(specialchars($data[$foundindex]), $this->filterEventTitle) === false) {
+                                        continue;
+                                    }
                                 }
                             }
                         }
@@ -729,6 +754,9 @@ class CalendarImport extends \Backend
                 $dtend = $dtendrow['value'];
                 $rrule = $vevent->getProperty('rrule', 1);
                 $summary = $vevent->getProperty('summary');
+                if (!empty($this->filterEventTitle) && strpos($summary, $this->filterEventTitle) === false) {
+                    continue;
+                }
                 $descriptionraw = $vevent->getProperty('description', false, true);
                 $description = $descriptionraw['value'];
                 $location = trim($vevent->getProperty('location'));
@@ -740,8 +768,13 @@ class CalendarImport extends \Backend
                 $arrFields['published'] = 1;
                 $arrFields['author'] = ($this->User->id) ? $this->User->id : 0;
 
+                $title = $summary;
+                if (!empty($this->patternEventTitle) && !empty($this->replacementEventTitle)) {
+                    $title = preg_replace($this->patternEventTitle, $this->replacementEventTitle, $title);
+                }
+
                 // set values from vevent
-                $arrFields['title'] = $summary;
+                $arrFields['title'] = !empty($title) ? $title : $summary;
                 $cleanedup = (strlen($description)) ? $description : $summary;
                 $cleanedup = preg_replace("/[\\r](\\\\)n(\\t){0,1}/ims", "", $cleanedup);
                 $cleanedup = preg_replace("/[\\r\\n]/ims", "", $cleanedup);
@@ -948,6 +981,7 @@ class CalendarImport extends \Backend
         $this->Template->endDate = $endDate;
         $this->Template->icssource = $icssource;
         $this->Template->deleteCalendar = $deleteCalendar;
+        $this->Template->filterEventTitle = $this->filterEventTitle;
         $this->Template->hrefBack = ampersand(str_replace('&key=import', '', \Environment::get('request')));
         $this->Template->goBack = $GLOBALS['TL_LANG']['MSC']['goBack'];
         $this->Template->headline = $GLOBALS['TL_LANG']['MSC']['import_calendar'][0];
@@ -996,6 +1030,7 @@ class CalendarImport extends \Backend
         $this->Template->endDate = $this->getEndDateWidget($defaultEndDate);
         $this->Template->timeshift = $this->getTimeShiftWidget($defaultTimeShift);
         $this->Template->deleteCalendar = $this->getDeleteWidget();
+        $this->Template->filterEventTitle = $this->getFilterWidget();
         $this->Template->max_file_size = $GLOBALS['TL_CONFIG']['maxFileSize'];
         $this->Template->message = \Message::generate();
 
@@ -1044,6 +1079,7 @@ class CalendarImport extends \Backend
                     $startDate = new Date($this->Template->startDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
                     $endDate = new Date($this->Template->endDate->value, $GLOBALS['TL_CONFIG']['dateFormat']);
                     $deleteCalendar = $this->Template->deleteCalendar->value;
+                    $this->filterEventTitle = $this->Template->filterEventTitle->value;
                     $timeshift = $this->Template->timeshift->value;
                     $file = new \File($arrFiles[0], true);
                     if (strcmp(strtolower($file->extension), 'ics') == 0) {
@@ -1056,6 +1092,7 @@ class CalendarImport extends \Backend
                             $this->Session->set('csv_startdate', $this->Template->startDate->value);
                             $this->Session->set('csv_enddate', $this->Template->endDate->value);
                             $this->Session->set('csv_deletecalendar', $deleteCalendar);
+                            $this->Session->set('csv_filterEventTitle', $this->filterEventTitle);
                             $this->Session->set('csv_filename', $file->path);
                             $this->importFromCSVFile();
                         }
@@ -1068,6 +1105,7 @@ class CalendarImport extends \Backend
                 $endDate = new Date(\Input::post('endDate'), $GLOBALS['TL_CONFIG']['dateFormat']);
                 $filename = \Input::post('icssource');
                 $deleteCalendar = \Input::post('deleteCalendar');
+                $this->filterEventTitle = \Input::post('filterEventTitle');
                 $timeshift = \Input::post('timeshift');
 
                 if (strlen(\Input::post('timezone'))) {
@@ -1343,6 +1381,42 @@ class CalendarImport extends \Backend
 
         // Valiate input
         if (\Input::post('FORM_SUBMIT') == 'tl_import_calendar_confirmation') {
+            $widget->validate();
+
+            if ($widget->hasErrors()) {
+                $this->blnSave = false;
+            }
+        }
+
+        return $widget;
+    }
+
+    /**
+     * Return the filter widget as object
+     * @param mixed
+     * @return object
+     */
+    protected function getFilterWidget($value = "")
+    {
+        $widget = new TextField();
+
+        $widget->id = 'filterEventTitle';
+        $widget->name = 'filterEventTitle';
+        $widget->mandatory = false;
+        $widget->maxlength = 50;
+        $widget->rgxp = 'text';
+        $widget->value = $value;
+
+        $widget->label = $GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle'][0];
+
+        if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen(
+                $GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle'][1]
+            )) {
+            $widget->help = $GLOBALS['TL_LANG']['tl_calendar_events']['importFilterEventTitle'][1];
+        }
+
+        // Valiate input
+        if ($this->Input->post('FORM_SUBMIT') == 'tl_import_calendar') {
             $widget->validate();
 
             if ($widget->hasErrors()) {

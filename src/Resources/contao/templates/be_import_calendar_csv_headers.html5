@@ -10,7 +10,7 @@
 <input type="hidden" name="FORM_SUBMIT" value="tl_csv_headers" />
 <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>" />
 
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <h3><?php echo $this->lngFields; ?></h3>
   <table>
 <?php foreach ($this->fields as $fieldArray): ?>
@@ -22,35 +22,35 @@
   </table>
 </div>
 <?php if (is_object($this->dateFormat)): ?>
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <h3><?php echo $this->dateFormat->generateLabel(); ?></h3>
   <?php echo $this->dateFormat->generateWithError(); if ($this->dateFormat->help): ?>
   <p class="tl_help"><?php echo $this->dateFormat->help; ?></p><?php endif; ?>
 </div>
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <h3><?php echo $this->timeFormat->generateLabel(); ?></h3>
   <?php echo $this->timeFormat->generateWithError(); if ($this->timeFormat->help): ?>
   <p class="tl_help"><?php echo $this->timeFormat->help; ?></p><?php endif; ?>
 </div>
 <?php endif; ?>
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <h3><?php echo $this->encoding->generateLabel(); ?></h3>
   <?php echo $this->encoding->generateWithError(); if ($this->encoding->help): ?>
   <p class="tl_help"><?php echo $this->encoding->help; ?></p><?php endif; ?>
 </div>
-<div class="tl_tbox">
+<div class="tl_tbox clr widget">
   <h3><?php echo $this->lngPreview; ?></h3>
 <?php if (is_array($this->header) && count($this->header) > 0): ?>
-  <table>
+  <table id="tl_versions" class="tl_listing">
     <thead>
       <tr>
-        <?php foreach ($this->header as $t): ?><td><?php echo $t; ?><?php endforeach; ?>
+        <?php foreach ($this->header as $t): ?><th><?php echo $t; ?></th><?php endforeach; ?>
       </tr>
     </thead>
     <tbody>
       <?php foreach ($this->preview as $line): ?>
       <tr>
-        <?php foreach ($line as $t): ?><td><?php echo $t; ?><?php endforeach; ?>
+        <?php foreach ($line as $t): ?><td><?php echo $t; ?></td><?php endforeach; ?>
       </tr>
       <?php endforeach; ?>
     </tbody>

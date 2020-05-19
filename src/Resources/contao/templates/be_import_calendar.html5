@@ -13,31 +13,47 @@
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $this->max_file_size; ?>">
 
 <div class="tl_tbox">
-  <h3><?php echo $this->icssource->generateLabel(); ?></h3>
-  <?php echo $this->markup; if ($this->icssource->help): ?>
-  <p class="tl_help"><?php echo $this->icssource->help; ?></p><?php endif; ?>
+  <div class="clr widget">
+    <h3><?php echo $this->icssource->generateLabel(); ?></h3>
+    <?php echo $this->markup; if ($this->icssource->help): ?>
+      <p class="tl_help"><?php echo $this->icssource->help; ?></p><?php endif; ?>
+  </div>
 
-  <h3><?php echo $this->startDate->generateLabel(); ?></h3>
-  <?php echo $this->startDate->generateWithError(); if ($this->startDate->help): ?>
-  <p class="tl_help"><?php echo $this->startDate->help; ?></p><?php endif; ?>
-  <script type="text/javascript"><!--//--><![CDATA[//><!--
-  window.addEvent('domready', function() { <?php echo $this->startDate->datepicker; ?> });
-  //--><!]]></script>
+  <div class="w50 widget">
+    <h3><?php echo $this->startDate->generateLabel(); ?></h3>
+    <?php echo $this->startDate->generateWithError(); if ($this->startDate->help): ?>
+      <p class="tl_help"><?php echo $this->startDate->help; ?></p><?php endif; ?>
+    <script type="text/javascript"><!--//--><![CDATA[//><!--
+      window.addEvent('domready', function() { <?php echo $this->startDate->datepicker; ?> });
+      //--><!]]></script>
+  </div>
 
-  <h3><?php echo $this->endDate->generateLabel(); ?></h3>
-  <?php echo $this->endDate->generateWithError(); if ($this->endDate->help): ?>
-  <p class="tl_help"><?php echo $this->endDate->help; ?></p><?php endif; ?>
-  <script type="text/javascript"><!--//--><![CDATA[//><!--
-  window.addEvent('domready', function() { <?php echo $this->endDate->datepicker; ?> });
-  //--><!]]></script>
+  <div class="w50 widget">
+    <h3><?php echo $this->endDate->generateLabel(); ?></h3>
+    <?php echo $this->endDate->generateWithError(); if ($this->endDate->help): ?>
+    <p class="tl_help"><?php echo $this->endDate->help; ?></p><?php endif; ?>
+    <script type="text/javascript"><!--//--><![CDATA[//><!--
+    window.addEvent('domready', function() { <?php echo $this->endDate->datepicker; ?> });
+    //--><!]]></script>
+  </div>
 
-  <h3><?php echo $this->deleteCalendar->generateLabel(); ?></h3>
-  <?php echo $this->deleteCalendar->generateWithError(); if ($this->deleteCalendar->help): ?>
-  <p class="tl_help"><?php echo $this->deleteCalendar->help; ?></p><?php endif; ?>
+  <div class="clr widget">
+    <h3><?php echo $this->filterEventTitle->generateLabel(); ?></h3>
+    <?php echo $this->filterEventTitle->generateWithError(); if ($this->filterEventTitle->help): ?>
+    <p class="tl_help"><?php echo $this->filterEventTitle->help; ?></p><?php endif; ?>
+  </div>
 
-  <h3><?php echo $this->timeshift->generateLabel(); ?></h3>
-  <?php echo $this->timeshift->generateWithError(); if ($this->timeshift->help): ?>
-  <p class="tl_help"><?php echo $this->timeshift->help; ?></p><?php endif; ?>
+  <div class="clr m12 widget">
+    <h3><?php echo $this->deleteCalendar->generateLabel(); ?></h3>
+    <?php echo $this->deleteCalendar->generateWithError(); if ($this->deleteCalendar->help): ?>
+    <p class="tl_help"><?php echo $this->deleteCalendar->help; ?></p><?php endif; ?>
+  </div>
+
+  <div class="clr widget">
+    <h3><?php echo $this->timeshift->generateLabel(); ?></h3>
+    <?php echo $this->timeshift->generateWithError(); if ($this->timeshift->help): ?>
+    <p class="tl_help"><?php echo $this->timeshift->help; ?></p><?php endif; ?>
+  </div>
 </div>
 
 </div>
