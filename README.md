@@ -1,3 +1,6 @@
+The extension is NOT MAINTAINED.
+Use this fork: https://github.com/cgoIT/contao-calendar-ical-bundle
+
 Contao 4 Calendar iCal Bundle
 =======================
 
